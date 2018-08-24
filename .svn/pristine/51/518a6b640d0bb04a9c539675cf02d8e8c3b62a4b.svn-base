@@ -1,0 +1,102 @@
+package tdh.ifm.android.imatch.app.ui.fragment;
+
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.BindBitmap;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseFragment;
+import tdh.ifm.android.imatch.app.ui.activity.MainActivity;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 14:52
+ */
+public class LoginFragment extends BaseFragment {
+
+    @BindView(R.id.et_phone)
+    EditText etPhone;
+    @BindView(R.id.et_pwd)
+    EditText etPwd;
+    @BindView(R.id.iv_pwd)
+    ImageView ivPwd;
+    @BindView(R.id.tv_code)
+    TextView tvCode;
+
+    @BindBitmap(R.mipmap.login_pwd_visible)
+    Bitmap pwdVisible;
+    @BindBitmap(R.mipmap.login_pwd_invisible)
+    Bitmap pwdInVisible;
+
+    private int type;
+    /** 密码是否可见  默认不可见 **/
+    private boolean isPwdVisible;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        type = bundle.getInt("type", 0);
+    }
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.fragment_login;
+    }
+
+    @Override
+    public void initData() {
+        if (type == 0) {
+            ivPwd.setVisibility(View.VISIBLE);
+            tvCode.setVisibility(View.GONE);
+            etPwd.setHint(R.string.prompt_login_password);
+        }else {
+            ivPwd.setVisibility(View.GONE);
+            tvCode.setVisibility(View.VISIBLE);
+            etPwd.setHint(R.string.prompt_login_code);
+        }
+    }
+
+    @OnClick(R.id.iv_pwd)
+    public void onIvPwdClicked() {
+        if (isPwdVisible) {
+            /** 密码不可见 **/
+            isPwdVisible = false;
+            ivPwd.setImageBitmap(pwdInVisible);
+            etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }else {
+            /** 密码可见 **/
+            isPwdVisible = true;
+            ivPwd.setImageBitmap(pwdVisible);
+            etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+    }
+
+    @OnClick(R.id.tv_code)
+    public void onTvCodeClicked() {
+    }
+
+    @OnClick(R.id.btn_login)
+    public void onBtnLoginClicked() {
+        Util.intentToActivity(context, MainActivity.class);
+
+    }
+
+    @OnClick(R.id.ll_register)
+    public void onLlRegisterClicked() {
+    }
+
+    @OnClick(R.id.tv_forget_password)
+    public void onTvForgetPasswordClicked() {
+    }
+}

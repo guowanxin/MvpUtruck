@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/UTruck-2.0.iml" filepath="$PROJECT_DIR$/UTruck-2.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/autolayout/autolayout.iml" filepath="$PROJECT_DIR$/autolayout/autolayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoView/photoView.iml" filepath="$PROJECT_DIR$/photoView/photoView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerviewlibrary/recyclerviewlibrary.iml" filepath="$PROJECT_DIR$/recyclerviewlibrary/recyclerviewlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retrofit/retrofit.iml" filepath="$PROJECT_DIR$/retrofit/retrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/update/update.iml" filepath="$PROJECT_DIR$/update/update.iml" />
+    </modules>
+  </component>
+</project>

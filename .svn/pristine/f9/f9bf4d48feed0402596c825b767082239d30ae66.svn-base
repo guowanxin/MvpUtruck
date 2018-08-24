@@ -1,0 +1,55 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.os.Bundle;
+import android.view.View;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * 会员等级
+ * Created by tdh on 2017/5/2.
+ */
+
+public class MemberLevelActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+
+    @BindString(R.string.txt_member)
+    String title;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_member_level;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @OnClick(R.id.btn_get_advanced_member)
+    public void onAdvancedMemberClicked() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("flag",1);
+        Util.intentToActivity(context,MemberLevelEditActivity.class,bundle);
+    }
+}

@@ -1,0 +1,39 @@
+package tdh.ifm.android.imatch.app.ui.view;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import java.util.List;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 14:47
+ */
+public class TabFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+    private List<Fragment> fragments;
+    private List<String> titles;
+
+    public TabFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments,
+                                   List<String> titles) {
+        super(fm);
+        this.fragments=fragments;
+        this.titles=titles;
+    }
+    @Override
+    public Fragment getItem(int position) {
+        return fragments.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return fragments.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
+    }
+
+}

@@ -1,0 +1,100 @@
+package tdh.ifm.android.imatch.app.ui.view;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.SysUtil;
+
+import tdh.ifm.android.imatch.app.R;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/28 11:41
+ */
+public class MyTitleView extends RelativeLayout {
+
+    private ImageView back;
+    private TextView tv_title, tv_right_title;
+    private ImageView tv_right_image;
+    private RelativeLayout rel_title;
+
+    public RelativeLayout getRel_title() {
+        return rel_title;
+    }
+
+    public void setRel_title(RelativeLayout rel_title) {
+        this.rel_title = rel_title;
+    }
+
+    public ImageView getTv_right_image() {
+        return tv_right_image;
+    }
+
+    public void setTv_right_image(ImageView tv_right_image) {
+        this.tv_right_image = tv_right_image;
+    }
+
+    public ImageView getBack() {
+        return back;
+    }
+
+    public void setBack(ImageView back) {
+        this.back = back;
+    }
+
+    public TextView getTv_title() {
+        return tv_title;
+    }
+
+    public void setTv_title(TextView tv_title) {
+        this.tv_title = tv_title;
+    }
+
+
+    public TextView getTv_right_title() {
+        return tv_right_title;
+    }
+
+    public void setTv_right_title(TextView tv_right_title) {
+        this.tv_right_title = tv_right_title;
+    }
+
+    public MyTitleView(Context context) {
+        super(context);
+        initView(context);
+
+    }
+
+    public MyTitleView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
+    }
+
+    public MyTitleView(Context context, AttributeSet attrs, int defStyle) {
+
+        super(context, attrs, defStyle);
+        initView(context);
+
+    }
+
+    private void initView(Context context) {
+
+        View.inflate(context, R.layout.view_title, this);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_right_title = (TextView) findViewById(R.id.tv_right_title);
+        back = (ImageView) findViewById(R.id.back);
+        tv_right_image = (ImageView) findViewById(R.id.tv_right_image);
+        rel_title = (RelativeLayout) findViewById(R.id.rel_title);
+        ViewGroup.LayoutParams lp = rel_title.getLayoutParams();
+        lp.height = SysUtil.getImageSize(80, SysUtil.getWidth(context));
+        rel_title.setLayoutParams(lp);
+
+    }
+
+}

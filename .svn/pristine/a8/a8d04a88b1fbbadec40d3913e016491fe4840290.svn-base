@@ -1,0 +1,46 @@
+package tdh.ifm.android.imatch.app.model;
+
+import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.User;
+import tdh.ifm.android.imatch.app.utils.NetContant;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/24 19:08
+ */
+public interface Api {
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.LOGININ)
+    Call<BaseResponse<User>> loginIn(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.LOGINOUT)
+    Call<BaseResponse> loginOut(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.SENDLOGINCODE)
+    Call<BaseResponse> sendLoginCode(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.FRIEND_LIST)
+    Call<BaseResponse<BasePageList<List<FriendInfo>>>> friendList(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.ADD_FRIEND)
+    Call<BaseResponse> addFriend(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST(NetContant.DELETE_FRIEND)
+    Call<BaseResponse> deleteFriend(@Body RequestBody requestBody);
+
+}

@@ -1,0 +1,57 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.adapter.MyMessageAdapter;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+
+/**
+ * 我的消息
+ * Author：xyf
+ * Created by tdh on 2017/5/3.
+ */
+
+public class MyMessageActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+
+    @BindString(R.string.txt_my_message)
+    String title;
+
+    private MyMessageAdapter adapter;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_mymessage;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+
+    @Override
+    public void initData() {
+        recycler.setLayoutManager(new LinearLayoutManager(context));
+
+        adapter = new MyMessageAdapter(context);
+        recycler.setAdapter(adapter);
+    }
+}

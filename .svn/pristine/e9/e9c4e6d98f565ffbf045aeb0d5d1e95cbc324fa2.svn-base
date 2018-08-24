@@ -1,0 +1,129 @@
+package tdh.ifm.android.imatch.app.ui.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.zhy.autolayout.utils.AutoUtils;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.MyMessage;
+import tdh.ifm.android.imatch.app.ui.activity.MessageTwoActivity;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Created by tdh on 2017/5/3.
+ */
+
+public class MyMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private Context context;
+    private List<MyMessage> myMessages;
+
+    public MyMessageAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<MyMessage> myMessages){
+        this.myMessages = myMessages;
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // 创建一个View，简单起见直接使用系统提供的布局，就是一个TextView
+        View view = LayoutInflater.from(context).inflate(
+                R.layout.item_message, parent, false);
+        // 创建一个ViewHolder
+        MyMessageAdapter.MyViewHolder holder = new MyMessageAdapter.MyViewHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final MyMessage myMessage=myMessages.get(position);
+
+        if(Constants.classCd_one.equals(myMessage.getClassCd())){
+            ((MyViewHolder) holder).imgHead.setImageResource(R.mipmap.icon_system);
+        }else if(Constants.classCd_two.equals(myMessage.getClassCd())){
+            ((MyViewHolder) holder).imgHead.setImageResource(R.mipmap.icon_order);
+        }else if(Constants.classCd_three.equals(myMessage.getClassCd())){
+            ((MyViewHolder) holder).imgHead.setImageResource(R.mipmap.icon_finance);
+        }else if(Constants.classCd_four.equals(myMessage.getClassCd())){
+            ((MyViewHolder) holder).imgHead.setImageResource(R.mipmap.icon_exception);
+        }
+
+        if (!TextUtils.isEmpty(myMessage.getCategoryName())) {
+            ((MyViewHolder) holder).tvMessageName.setText(myMessage.getCategoryName());
+        }
+        if(!TextUtils.isEmpty(myMessage.getCreatedTime())){
+            ((MyViewHolder) holder).tvMessageTime.setText(myMessage.getCreatedTime());
+        }
+
+        if (!TextUtils.isEmpty(myMessage.getMessage())){
+            ((MyViewHolder) holder).tvMessage.setText(myMessage.getMessage());
+        }
+
+        if (!TextUtils.isEmpty(myMessage.getUnReadNumber())){
+            ((MyViewHolder) holder).llMessageNmber.setVisibility(View.VISIBLE);
+            ((MyViewHolder) holder).tvMessageNumber.setText(myMessage.getUnReadNumber());
+        }
+
+        ((MyViewHolder) holder).llPraent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context,MessageTwoActivity.class);
+                intent.putExtra("classCd",myMessage.getClassCd());
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        if (myMessages == null) {
+            return 0;
+        }
+        return myMessages.size();
+    }
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.ll_parent)
+        LinearLayout llPraent;
+        @BindView(R.id.img_head_portrait)
+        ImageView imgHead;
+        @BindView(R.id.tv_message_name)
+        TextView tvMessageName;
+        @BindView(R.id.tv_message_time)
+        TextView tvMessageTime;
+        @BindView(R.id.tv_message)
+        TextView tvMessage;
+        @BindView(R.id.ll_message_nmber)
+        LinearLayout llMessageNmber;
+        @BindView(R.id.tv_message_nmber)
+        TextView tvMessageNumber;
+
+        public MyViewHolder(View view) {
+            super(view);
+            // 给父控件绑定监听器
+            AutoUtils.autoSize(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+}

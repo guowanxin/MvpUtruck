@@ -1,0 +1,76 @@
+package tdh.ifm.android.imatch.app.base;
+
+import java.io.Serializable;
+
+/**
+ * Author：gwx
+ * 请求参数base类
+ * Create at：2017/4/27 11:35
+ */
+public class BaseRequest<T> implements Serializable{
+
+    /**
+     * 请求发起方的产品代码
+     */
+    private T body;
+
+    /**
+     * 请求发起方的产品代码
+     */
+    private String productCode;
+
+    /**
+     * 请求发起方的应用代码
+     */
+    private String appCode;
+
+    /**
+     * 签名
+     */
+    private String sign;
+
+    /**
+     * 接口版本号
+     */
+    private String version;
+
+    public T getBody() {
+        return body;
+    }
+
+    public void setBody(T body) {
+        this.body = body;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+}

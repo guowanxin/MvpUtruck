@@ -1,0 +1,70 @@
+package tdh.ifm.android.imatch.app.utils;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/21 19:11
+ */
+public class NetContant {
+
+    public static final String TAG = "utruck";
+
+   // public static final String HOST_URL = "http://192.168.72.163:9990/";
+
+    public static final String HOST_URL = "http://192.168.65.78:8080/";
+
+    public static final String UPDATE_URL = "http://admin.56pingtai.net/dev/check-app-update.do";
+
+    public static final String UT = "api/ut/";
+    public static final String INDEX = "api/index/";
+    public static final String MEMBER = "api/member/center/";
+    public static final String TDPAY = "api/tdpay/";
+
+    /**  我的好友  **/
+    public static final String FRIEND_LIST = UT + "friend/list.do";
+    /**  添加好友  **/
+    public static final String ADD_FRIEND = UT + "friend/create.do";
+    /**  删除好友  **/
+    public static final String DELETE_FRIEND = UT + "friend/delete.do";
+
+    /**
+     * 会员相关
+     */
+    /**  登录  **/
+    public static final String LOGININ = INDEX + "login.do";
+    /**  司机注册  **/
+    public static final String REGISTER_DRIVER=INDEX+"registerDriver.do";
+    /**  货主注册  **/
+    public static final String REGISTER_SHIPPER=INDEX+"registerShipper.do";
+    /**  经纪人注册  **/
+    public static final String REGISTER_AGENT=INDEX+"registerAgent.do";
+    /**  物流企业注册  **/
+    public static final String REGISTER_COMPANY=INDEX+"registerLogisticsCompany.do";
+    /**  退出登录  **/
+    public static final String LOGINOUT = INDEX + "logout.do";
+    /**  发送登录验证码  **/
+    public static final String SENDLOGINCODE = INDEX + "sendMobileLoginCode.do";
+    /**  查询当前登录基本信息  **/
+    public static final String QUERYMEMBER = MEMBER + "queryMember.do";
+    /**  发送注册验证码 **/
+    public static final String SEND_REGISTER_CODE=INDEX+"sendRegisterCode.do";
+    /**  重置登录密码  **/
+    public static final String RESETPASSWORD = INDEX+"resetLoginPassword.do";
+    /**  发送重置密码验证码  **/
+    public static final String SENDPASSWOIDCODE=INDEX+"sendLoginPasswordCode.do";
+    /**  查询当前会员认证信息  **/
+    public static final String QUERY_MEMBERAUTH_INFO = MEMBER+"queryMemberAuthInfo.do";
+    /**  补全认证信息  **/
+    public static final String COMPLETION_MEMBERAUTH_INFO = MEMBER+"completionMemberData.do";
+    /**  查询当前个人登录信息  **/
+    public static final String QUERY_PERSON_MESSAGE=MEMBER+"queryPersonal.do";
+    /**  查询当前企业信息 **/
+    public static final String QUERY_COMPANY_MESSAGE=MEMBER+"queryCompany.do";
+    /**  修改个人信息审核  **/
+    public static final String UPDATE_PERSON_MESSAGE=MEMBER+"updatePersonal.do";
+    /** 修改企业信息审核  **/
+    public static final String UPDATE_COMPANY_MESSAGE=MEMBER+"updateCompany.do";
+
+    /**  我的钱包  **/
+    public static final String MYWALLET = HOST_URL + TDPAY + "account.do";
+
+}

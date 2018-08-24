@@ -1,0 +1,132 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.graphics.Bitmap;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
+
+import com.tdh.common.utils.CommonUtil;
+
+import java.util.List;
+
+import butterknife.BindBitmap;
+import butterknife.BindString;
+import butterknife.BindView;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.presenter.FriendPresenter;
+import tdh.ifm.android.imatch.app.ui.adapter.FriendListAdapter;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+import tdh.ifm.android.imatch.app.view.FriendView;
+
+/**
+ * 我的好友
+ * Author：xyf
+ * Created by tdh on 2017/5/4.
+ */
+
+public class FriendListActivity extends BaseActivity implements FriendView {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+
+    @BindString(R.string.txt_friend)
+    String title;
+    @BindBitmap(R.mipmap.friend_add)
+    Bitmap bm_addfriend;
+
+    private FriendListAdapter adapter;
+
+    private List<FriendInfo> friendList;
+
+    private FriendPresenter friendPresenter;
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_friend_list;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getTv_right_image().setVisibility(View.VISIBLE);
+        titleview.getTv_right_image().setImageBitmap(bm_addfriend);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        titleview.getTv_right_image().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.intentToActivity(context,AddFriendActivity.class);
+            }
+        });
+    }
+
+
+    @Override
+    public void initData() {
+        friendPresenter.friendList(null);
+        recycler.setLayoutManager(new LinearLayoutManager(context));
+
+        adapter = new FriendListAdapter(context);
+        adapter.setData(friendList);
+        recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideprogress() {
+
+    }
+
+    @Override
+    public void showFailure(String str, Throwable t) {
+
+    }
+
+    @Override
+    public void showResState(int code) {
+
+    }
+
+    @Override
+    public void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse) {
+        if (baseResponse.isSuccess()) {
+            friendList = baseResponse.getBody().getResult();
+            adapter.notifyDataSetChanged();
+        } else {
+            if (!TextUtils.isEmpty(baseResponse.getMessage())) {
+                CommonUtil.getToast(context, baseResponse.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onFriendDetailSuccess(BaseResponse<FriendInfo> baseResponse) {
+
+    }
+
+    @Override
+    public void onDeleteFriendSuccess(BaseResponse baseResponse) {
+
+    }
+
+    @Override
+    public void onAddFriendSuccess(BaseResponse baseResponse) {
+
+    }
+}

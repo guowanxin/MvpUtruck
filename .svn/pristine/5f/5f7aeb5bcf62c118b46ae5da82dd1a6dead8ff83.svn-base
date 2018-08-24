@@ -1,0 +1,68 @@
+package tdh.ifm.android.imatch.app.base;
+
+import android.app.Activity;
+import android.app.Application;
+
+import com.tdh.common.utils.SharedAppContext;
+import com.zhy.autolayout.config.AutoLayoutConifg;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/20 19:47
+ */
+public class BaseApplication extends Application {
+
+    public List<Activity> listActivity = new ArrayList<Activity>();
+    private static BaseApplication instance;
+
+    //单例模式中获取唯一的MyApplication实例
+    public static BaseApplication getInstance() {
+        if (instance == null) {
+            instance = new BaseApplication();
+        }
+        return instance;
+    }
+
+    //添加Activity到容器中
+    public void addActivity(Activity activity) {
+
+        if (!listActivity.contains(activity)) {
+            listActivity.add(activity);
+        }
+
+    }
+
+    public void removeActivity(Activity activity) {
+        if (listActivity != null && activity != null) {
+            listActivity.remove(activity);
+        }
+    }
+
+    //遍历所有Activity并finish
+    public void exit() {
+        if (listActivity != null && listActivity.size() > 0) {
+            for (Activity activity : listActivity) {
+                if (activity != null) {
+                    activity.finish();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+
+        SharedAppContext.setContentContext(getApplicationContext());
+
+        //代码自动适配初始化
+        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
+
+
+    }
+
+}

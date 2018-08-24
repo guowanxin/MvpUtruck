@@ -1,0 +1,123 @@
+package tdh.ifm.android.imatch.app.model;
+
+import android.content.Context;
+
+import com.tdh.common.utils.APPLog;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import tdh.ifm.android.imatch.app.base.BaseNet;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseRequest;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.FriendListRequest;
+import tdh.ifm.android.imatch.app.bean.FriendRequest;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/5 14:54
+ */
+public class UserModelImpl extends BaseNet implements UserModel {
+
+    public UserModelImpl(Context context) {
+        super(context);
+    }
+
+    @Override
+    public void getFriendList(final FriendListRequest request, final  OnFriendListener listener) {
+        BaseRequest<FriendListRequest> baseRequest = new BaseRequest<FriendListRequest>();
+        baseRequest.setBody(request);
+        String json = gson.toJson(baseRequest);
+        Call<BaseResponse<BasePageList<List<FriendInfo>>>> call = api.friendList(getBody(json));
+        call.enqueue(new Callback<BaseResponse<BasePageList<List<FriendInfo>>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<BasePageList<List<FriendInfo>>>> call, Response<BaseResponse<BasePageList<List<FriendInfo>>>> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        int code = Util.getResCode(response.body().isSuccess(), response.body().getCode());
+                        if (code == 200) {
+                            listener.onFriendListSuccess(response.body());
+                        } else {
+                            listener.onResState(code);
+                        }
+                    }
+                } else {
+                    listener.onResState(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<BasePageList<List<FriendInfo>>>> call, Throwable t) {
+                APPLog.error(t.getMessage(), t);
+            }
+        });
+    }
+
+    @Override
+    public void deleteFriend(FriendRequest request,final  OnFriendListener listener) {
+        BaseRequest<FriendRequest> baseRequest = new BaseRequest<FriendRequest>();
+        baseRequest.setBody(request);
+        String json = gson.toJson(baseRequest);
+        Call<BaseResponse> call = api.deleteFriend(getBody(json));
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        int code = Util.getResCode(response.body().isSuccess(), response.body().getCode());
+                        if (code == 200) {
+                            listener.onDeleteFriendSuccess(response.body());
+                        } else {
+                            listener.onResState(code);
+                        }
+                    }
+                } else {
+                    listener.onResState(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                APPLog.error(t.getMessage(), t);
+            }
+        });
+    }
+
+    @Override
+    public void addFriend(FriendRequest request,final  OnAddFriendList listener) {
+        BaseRequest<FriendRequest> baseRequest = new BaseRequest<FriendRequest>();
+        baseRequest.setBody(request);
+        String json = gson.toJson(baseRequest);
+        Call<BaseResponse> call = api.addFriend(getBody(json));
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        int code = Util.getResCode(response.body().isSuccess(), response.body().getCode());
+                        if (code == 200) {
+                            listener.onAddFriendSuccess(response.body());
+                        } else {
+                            listener.onResState(code);
+                        }
+                    }
+                } else {
+                    listener.onResState(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                APPLog.error(t.getMessage(), t);
+            }
+        });
+    }
+
+
+
+}

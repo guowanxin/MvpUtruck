@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">common</string>
+
+    <string name="txt_dialog_common_confirm">确定</string>
+    <string name="txt_dialog_common_cancel">取消</string>
+    <string name="txt_dialog_common_title">提示</string>
+
+    <string name="choose_date">请上下滚动选择时间</string>
+</resources>

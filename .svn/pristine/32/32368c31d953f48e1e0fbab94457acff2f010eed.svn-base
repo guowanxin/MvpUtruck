@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        app:tabBackground="@color/dividers"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/title_background"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/title_background"
+        app:tabTextColor="@color/text_prompt" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

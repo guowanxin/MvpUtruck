@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    signingConfigs {
+        key {
+            keyAlias 'androidreleasekey'
+            keyPassword '2x89Mc98'
+            storeFile file('C:/Program Files/tdh-android-release')
+            storePassword 'Tdh5656Xs!$'
+        }
+    }
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "tdh.ifm.android.imatch.app"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 20
+        versionName "2.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64", "arm64-v8a", "x86"
+        }
+        manifestPlaceholders = [
+                GETUI_APP_ID : "9Ssze4Llhs8CjORub9rhU8",
+                GETUI_APP_KEY : "4ukJsAWM3dApwG2s24Y8v6",
+                GETUI_APP_SECRET : "m1bVtOmINw5wCE0W6bNYs6"
+        ]
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig  signingConfigs.key
+        }
+
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig  signingConfigs.key
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile project(':update')
+    compile project(':autolayout')
+    compile project(':retrofit')
+    compile project(':recyclerviewlibrary')
+    compile project(':photoView')
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100.jar')
+    compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/GetuiSDK2.9.5.0.jar')
+}

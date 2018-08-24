@@ -1,0 +1,38 @@
+package tdh.ifm.android.imatch.app.bean;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/16 19:54
+ */
+public class AttentionLine {
+    /*关注线路主键*/
+    private String routeId;
+    /*起始城市*/
+    private Integer orginalCt;
+    /*目的城市*/
+    private Integer destinationCt;
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public Integer getOrginalCt() {
+        return orginalCt;
+    }
+
+    public void setOrginalCt(Integer orginalCt) {
+        this.orginalCt = orginalCt;
+    }
+
+    public Integer getDestinationCt() {
+        return destinationCt;
+    }
+
+    public void setDestinationCt(Integer destinationCt) {
+        this.destinationCt = destinationCt;
+    }
+}

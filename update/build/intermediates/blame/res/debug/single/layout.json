@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/layout/popup_date.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/layout/popup_date.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/layout/wheel_date.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/layout/wheel_date.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/layout/wheel_time.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/layout/wheel_time.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/layout/dialog_common.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/layout/dialog_common.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/layout/activity_notif_progressbar.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/update/src/main/res/layout/activity_notif_progressbar.xml"
+    }
+]

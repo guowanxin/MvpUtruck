@@ -1,0 +1,13 @@
+package tdh.ifm.android.imatch.app.view;
+
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.base.BaseView;
+
+/**
+ * Created by tdh on 2017/5/9.
+ */
+
+public interface ResetPwdView extends BaseView{
+    void onResetPwdSuccess(BaseResponse baseResponse);
+    void onSendPasswordCodeSuccess(BaseResponse baseResponse);
+}

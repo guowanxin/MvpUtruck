@@ -1,0 +1,62 @@
+package tdh.ifm.android.imatch.app.bean;
+
+import com.baidu.location.BDLocation;
+
+import java.util.Date;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/11 17:33
+ */
+public class Location {
+
+    private String longitude;
+
+    private String latitude;
+
+    private long createTime;
+
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public static Location fromBaiduLocation(BDLocation bdl) {
+        Location loc = new Location();
+
+        loc.setLatitude(bdl.getLatitude()+"");
+        loc.setLongitude(bdl.getLongitude()+"");
+        loc.setCreateTime(new Date().getTime());
+
+        return loc;
+    }
+}

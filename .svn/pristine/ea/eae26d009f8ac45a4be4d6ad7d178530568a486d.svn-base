@@ -1,0 +1,49 @@
+package tdh.ifm.android.imatch.app.ui.activity.user;
+
+import android.os.Bundle;
+import android.view.View;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * 账户类型
+ * Created by tdh on 2017/5/2.
+ */
+
+public class AccountTypeActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_account_type;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initTitleView() {
+        titleview.getTv_title().setText("账户类型");
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @OnClick(R.id.ll_img_driver)
+    public void onViewClicked() {
+        Util.intentToActivity(context,DriverRegisterActivity.class);
+    }
+}

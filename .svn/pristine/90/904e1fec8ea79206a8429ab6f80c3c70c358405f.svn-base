@@ -1,0 +1,104 @@
+package tdh.ifm.android.imatch.app.utils;
+
+/**
+ * Created by tdh on 2016/12/14.
+ */
+
+public class RegExpConstants {
+    /**
+     * 是否数字
+     */
+    public static final String ISNUMBER = "^[0-9]*$";
+    /**
+     * 是否email
+     */
+    public static final String ISEMAIL = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+    /**
+     * 是否ip
+     */
+    public static final String ISIP = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
+    /**
+     * 是否url
+     */
+    public static final String ISUrl = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+    /**
+     * 是否电话号码
+     *
+     * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+     *
+     * 　　联通：130、131、132、152、155、156、185、186
+     *
+     * 　　电信：133、153、180、189、（1349卫通）
+     */
+//    public static final String ISTELEPHONE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String ISTELEPHONE = "[1][358]\\\\d{9}";
+    /**
+     * 是否密码
+     */
+    public static final String ISPASSWORD = "[A-Za-z0-9]*";
+    /**
+     * 是否密码长度6-16字母数字
+     */
+    public static final String ISPASSWDLENGTH = "^[A-Za-z0-9]{6,16}$";
+
+    /**
+     * 密码长度6-16
+     */
+    public static final String ISPASSWLENGTH = "^\\d{6,16}$";
+
+    /**
+     * 是否用户名长度2-16字母数字
+     */
+    public static final String ISUSERNAMELENGTH = "^[A-Za-z0-9]{2,16}$";
+    /**
+     * /** 是否邮编
+     */
+    public static final String ISPOSTALCODE = "^\\d{6}$";
+    /**
+     * 是否身份证
+     */
+    public static final String ISIDCARD = "(^\\d{18}|\\d{17}[x|X]$)|(^\\d{15}$)";
+    /**
+     * 是否手机号码 要严格的验证手机号码，必须先要清楚现在已经开放了哪些数字开头的号码段，目前国内号码段分配如下：
+     *
+     * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+     *
+     * 联通：130、131、132、152、155、156、185、186
+     *
+     * 电信：133、153、180、189、（1349卫通）
+     */
+    public static final String ISMOBILE1 = "^[1]+[3,5,8]+\\d{9}$";
+    public static final String ISMOBILE = "^[1]+[3,4,5,7,8][0-9]\\d{8}$";// 防止有连号的
+
+    /**
+     * 是否小写
+     */
+    public static final String ISUPCHAR = "^[A-Z]+$";
+    /**
+     * 是否大写
+     */
+    public static final String ISLOWCHAR = "^[a-z]+$";
+    /**
+     * 是否字母
+     */
+    public static final String ISLETTER = "^[A-Za-z]+$";
+    /**
+     * 是否汉字
+     */
+    public static final String ISCHINESE = "[\u4E00-\u9FA5]*";
+    /**
+     * 是否车牌号
+     */
+    public static final String ISTRUCKERNO = "^((京|津|冀|晋|蒙|辽|吉|黑|沪|苏|浙|皖|闽|赣|鲁|豫|鄂|湘|粤|桂|琼|渝|川|贵|云|藏|陕|甘|青|宁|新|港|澳|军|空|海|北|沈|兰|济|南|广|成|临)[a-zA-Z]{1}[a-zA-Z0-9]{4}(警|使|学|挂|领|港|澳|超|临|[a-zA-Z0-9]))|((WJ)[0-9]{2}(消|边|通|森|金|警|电|[a-zA-Z0-9])[a-zA-Z0-9]{4})$";
+
+    /**
+     * 以1开头的手机号
+     */
+    public static final String ISTEL = "^[1]\\d{10}$";
+
+    /**
+     * 是否金额
+     */
+    public static final String ISCURRENT = "^(([1-9]{1}\\d*)|([0]{1}))(((\\.(\\d){1}[1-9]{1})|(\\.[1-9]{1}))?$)";
+
+}

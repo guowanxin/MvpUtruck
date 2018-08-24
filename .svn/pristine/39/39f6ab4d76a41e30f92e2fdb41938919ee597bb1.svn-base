@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <tdh.ifm.android.imatch.app.ui.view.CircleImageView
+            android:id="@+id/iv_touxiang"
+            android:layout_width="220px"
+            android:layout_height="220px"
+            android:layout_marginTop="10px"
+            android:src="@mipmap/icon_default_avatar" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40px"
+            android:layout_marginTop="40px"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/tv_version_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="V2.0.0"
+                android:textColor="@color/text_prompt_right"
+                android:textSize="38px" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_wx_official" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/fs_row_text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="22px"
+                android:text="tdh56pingtai" />
+        </LinearLayout>
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:id="@+id/ll_check_update"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_customer_service" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/fs_row_text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="22px"
+                android:text="2710645383"
+                android:textSize="30px" />
+
+        </LinearLayout>
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_customer_service_tel" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/fs_row_text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="22px"
+                android:text="400-033-9090"
+                android:textSize="30px" />
+        </LinearLayout>
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_email_address" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/fs_row_text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="22px"
+                android:text="helpdesk@56pingtai.net.cn"
+                android:textSize="30px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_official_website" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/fs_row_text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="22px"
+                android:text="http://wutao.56pingtai.net"
+                android:textSize="30px" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_first"
+        android:layout_width="match_parent"
+        android:layout_height="10px"
+        android:layout_marginTop="100px" />
+
+    <TextView
+
+        android:id="@+id/tv_nversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/txt_company_name"
+        android:textColor="@color/text_prompt_right"
+        android:textSize="30px" />
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="10px">
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22px"
+            android:text="天地汇招募公路大师,点击获取更多详情"
+            android:textColor="@color/text_prompt"
+            android:textSize="30px"/>
+
+        <TextView
+            android:id="@+id/tv_message_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3px"
+            android:layout_marginLeft="22px"
+            android:text="2017-05-0511:07"
+            android:textColor="@color/text_prompt"
+            android:textSize="30px"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,516 @@
+package tdh.ifm.android.imatch.app.utils;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.igexin.sdk.PushManager;
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.CommonUtil;
+import com.tdh.common.utils.SysUtil;
+import com.tdh.common.view.MySwipeRefreshLayout;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.IdentityHashMap;
+
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseApplication;
+import tdh.ifm.android.imatch.app.base.BaseRequest;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.service.LocationService;
+import tdh.ifm.android.imatch.app.ui.activity.LoginActvity;
+import tdh.ifm.android.imatch.app.ui.adapter.DialogAdapter;
+import tdh.ifm.android.imatch.app.ui.view.FullyLinearLayoutManager;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/2 17:14
+ */
+public class Util {
+
+    /**
+     * 跳转到下个界面
+     * @param context
+     * @param cls
+     */
+    public static void intentToActivity(Context context,Class cls) {
+        intentToActivity(context, cls,null);
+    }
+
+    /**
+     * 跳转到下个界面 需要处理返回值的
+     * @param context
+     * @param cls
+     */
+    public static void intentToActivity(Context context,Class cls,int requestCode) {
+        intentToActivity(context,cls,requestCode,null);
+    }
+
+    /**
+     * 跳转到下个界面 需要传参数的
+     * @param context
+     * @param cls
+     */
+    public static void intentToActivity(Context context,Class cls, Bundle bundle) {
+        Intent intent = new Intent(context,cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到下个界面 需要传参数的 需要处理返回值的
+     * @param context
+     * @param cls
+     */
+    public static void intentToActivity(Context context, Class cls, int requestCode, Bundle bundle) {
+        Intent intent = new Intent(context,cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        ((Activity)context).startActivityForResult(intent,requestCode);
+    }
+
+    /**
+     * 设置刷新属性。 距顶位置 颜色。
+     */
+    public static void setSwipeLayout(Context context, MySwipeRefreshLayout swipeRefreshLayout) {
+
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        swipeRefreshLayout.setColorSchemeResources(R.color.title_background);
+        swipeRefreshLayout.setProgressViewEndTarget(true, SysUtil.getImageSize(90, SysUtil.getWidth(context)));
+
+    }
+
+    /**
+     * 判断接口返回是否正常
+     * @param baseResponse
+     * @return
+     */
+    public static <T> int getResCode(BaseResponse<T> baseResponse) {
+        if (baseResponse == null) {
+            return 200;
+        }
+        if (baseResponse.isSuccess()) {
+            return 200;
+        }else {
+            if (!TextUtils.isEmpty(baseResponse.getCode())) {
+                if (baseResponse.getCode().equals("AA-403")) {
+                    return 602;
+                }else if (baseResponse.getCode().equals("AA-401")) {
+                    return 601;
+                }
+            }
+        }
+        return 200;
+    }
+
+    /**
+     * 处理接口返回code不为200情况（601没有权限  602未登录  400没有接口 500服务端报错）
+     * @param code
+     */
+    public static void setResCode(Context context,int code) {
+        if (code == 601) {
+            CommonUtil.getToast(context,"您没有该操作的权限");
+
+        }else if (code == 602) {
+            CommonUtil.getToast(context,"您已退出登录，请重新登录");
+
+            exitLogin(context);
+        }else if (code == 404) {
+            CommonUtil.getToast(context,"服务器好像出了点问题呢，请稍后再试");
+        }else if (code == 500) {
+            CommonUtil.getToast(context,"获取数据失败");
+        }
+    }
+
+    /**
+     * 退出登录
+     * @param context
+     */
+    public static void exitLogin(Context context) {
+        PushManager.getInstance().unBindAlias(context,
+                SharedPreferencesUtil.getValueAsInt(Constants.USERID,0)+"",false);
+
+        SharedPreferencesUtil.setValue(Constants.USERID,0);
+        SharedPreferencesUtil.setValue(Constants.PHONE,"");
+        SharedPreferencesUtil.setValue(Constants.PASSWORD,"");
+
+        // 清除cookie即可彻底清除缓存
+        CookieSyncManager.createInstance(context);
+        CookieManager.getInstance().removeAllCookie();
+
+        //停止定位服务
+        Intent service = new Intent(context, LocationService.class);
+        context.stopService(service);
+
+        Intent intent = new Intent(context, LoginActvity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+
+        BaseApplication.getInstance().exit();
+    }
+
+    /**
+     * 得到自定义的progressDialog
+     * @param context
+     * @return
+     */
+    public static Dialog createLoadingDialog(Context context) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.dialog_loading, null);// 得到加载view
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
+        // main.xml中的ImageView
+        ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
+//        TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
+        // 加载动画
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
+                context, R.anim.loading_animation);
+        // 使用ImageView显示动画
+        spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+        spaceshipImage.clearAnimation();
+//        tipTextView.setText(msg);// 设置加载信息
+
+        Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+
+        loadingDialog.setCancelable(true);// 不可以用“返回键”取消
+        loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
+        return loadingDialog;
+
+    }
+
+    /**
+     * 读取照片exif信息中的旋转角度
+     * @param path 照片路径
+     * @return角度
+     */
+    public static int readPictureDegree(String path) {
+        int degree  = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    /**
+     * 旋转角度
+     * @param img
+     * @param degree
+     * @return
+     */
+    public static Bitmap rotaingImage(Bitmap img, int degree){
+        if (img == null || degree == 0) {
+            return img;
+        }
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree); /*翻转*/
+        int width = img.getWidth();
+        int height =img.getHeight();
+        img = Bitmap.createBitmap(img, 0, 0, width, height, matrix, true);
+        return img;
+    }
+
+    /**
+     * bitmap 转换输出流以及获取长度
+     *
+     * @param image
+     * @return
+     */
+    public static byte[] compressImage(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+        while (baos.toByteArray().length / 1024.0 >= 200) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset();// 重置baos即清空baos
+            options -= 10;// 每次都减少10
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+            if (options <= 10) {
+                break;
+            }
+        }
+
+        APPLog.info(NetContant.TAG,"length  is "+baos.toByteArray().length);
+        return baos.toByteArray();
+    }
+
+    public static Bitmap getimage(String srcPath) {
+        BitmapFactory.Options newOpts = new BitmapFactory.Options();
+        // 开始读入图片，此时把options.inJustDecodeBounds 设回true了
+        newOpts.inJustDecodeBounds = true;
+        Bitmap bitmap = null;// 此时返回bm为空
+
+        newOpts.inJustDecodeBounds = false;
+        int w = newOpts.outWidth;
+        int h = newOpts.outHeight;
+
+        float yuan = 1136f / 900f;
+        float x = w + 0.0f;
+        float y = h + 0.0f;
+        if (x <= 900.0 && y <= 1136.0) {// 尺寸不用处理的
+            newOpts.inSampleSize = 1;// 设置缩放比例
+            bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        } else if ((y / x) > yuan) {// 以Y为标准
+            // 现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
+            float hh = 1136f;// 这里设置高度为800f
+            float ww = 1136f / y * x;// 这里设置宽度为480f
+            // 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+            double be = 1;// be=1表示不缩放
+            if (w > h && w > ww) {// 如果宽度大的话根据宽度固定大小缩放
+                be = newOpts.outWidth / ww;
+            } else if (w < h && h > hh) {// 如果高度高的话根据宽度固定大小缩放
+                be = newOpts.outHeight / hh;
+            }
+            if (be <= 0)
+                be = 1;
+            if (be>0&&be<=2) {
+                be = 2;
+            }else if (be >2&&be<=4 ) {
+                be = 4;
+            }else if(be>4&&be<=8){
+                be = 8;
+            }else if (be>8&&be<=16) {
+                be = 16;
+            }else if (be>16&&be<=32) {
+                be = 32;
+            }else if (be>32) {
+                be = 64;
+            }
+            newOpts.inSampleSize = (int)be;// 设置缩放比例
+            // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+            bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        } else {// 以X为标准
+            // 现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
+            float hh = 900f / x * y;// 这里设置高度为800f
+            float ww = 900f;// 这里设置宽度为480f
+            // 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+            double be = 1;// be=1表示不缩放
+            if (w > h && w > ww) {// 如果宽度大的话根据宽度固定大小缩放
+                be = newOpts.outWidth / ww;
+            } else if (w < h && h > hh) {// 如果高度高的话根据宽度固定大小缩放
+                be = newOpts.outHeight / hh;
+            }
+            if (be <= 0)
+                be = 1;
+            if (be>0&&be<=2) {
+                be = 2;
+            }else if (be >2&&be<=4) {
+                be = 4;
+            }else if(be>4&&be<=8){
+                be = 8;
+            }else if (be>8&&be<=16) {
+                be = 16;
+            }else if (be>16&&be<=32) {
+                be = 32;
+            }else if (be>32) {
+                be = 64;
+            }
+            newOpts.inSampleSize = (int) be;// 设置缩放比例
+            // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+            bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        }
+
+        return bitmap;// 压缩好比例大小后再进行质量压缩
+    }
+
+    /**
+     * 把date转成字符串
+     * @param date
+     * @return
+     */
+    public static String getTime(Date date) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String str = sdf.format(date);
+        return str;
+    }
+
+    /**
+     * 把字符串转成date
+     * @param time
+     * @return
+     */
+    public static Date getDate(String time) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(time);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
+    /**
+     *同步cookie
+     * @param context
+     * @param url
+     */
+    public static void synCookies(Context context, String url, String cookieValue) {
+//        APPLog.error("=====cookieValue======"+cookieValue);
+//        CookieSyncManager.createInstance(context);
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.setCookie(url,cookieValue);
+//        CookieSyncManager.getInstance().sync();
+    }
+
+    /**
+     * 弹出加载框
+     * @param context
+     * @param keys
+     * @param values
+     * @param title
+     * @param editText
+     */
+    public static void showDialogData(Context context, String[] keys, String[] values, String title, final EditText editText) {
+
+        final Dialog dialog1 = new Dialog(context, R.style.dialogNormal);
+        Window window = dialog1.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+
+        dialog1.setCancelable(true);
+        dialog1.setCanceledOnTouchOutside(true);
+        dialog1.show();
+        window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, 600);
+        dialog1.setContentView(R.layout.activity_dialog);
+        RecyclerView lv = (RecyclerView) dialog1.findViewById(R.id.recycler);
+        lv.setBackgroundColor(context.getResources().getColor(R.color.text_prompt));
+        DialogAdapter dialogAdapter = new DialogAdapter(context, keys, values, title);
+        lv.setLayoutManager(new FullyLinearLayoutManager(context));
+        dialogAdapter.setListener(new DialogAdapter.onClickIemListener() {
+            @Override
+            public void clickIemListener(String key, String value) {
+                editText.setText(value);
+                dialog1.cancel();
+            }
+        });
+
+        lv.setAdapter(dialogAdapter);
+        dialogAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 得到下标值
+     * @param keys
+     * @param values
+     * @param value
+     */
+    public static String getKeyByValue(String keys[],String values[],String value){
+        APPLog.info(NetContant.TAG, "keys==================== " + keys);
+        APPLog.info(NetContant.TAG, "values==================== " + values);
+        APPLog.info(NetContant.TAG, "value==================== " + value);
+        if(null!=keys&&null!=values&&null!=value){
+            for (int i = 0;i<values.length;i++){
+                if(value.equals(values[i])){
+                    return keys[i];
+                }
+            }}
+        return null;
+    }
+
+    public static String getValueByKey(String keys[],String values[],String value){
+        if(null!=keys&&null!=values&&null!=value){
+            for (int i = 0;i<keys.length;i++){
+                if(value.equals(keys[i])){
+                    return values[i];
+                }
+            }}
+        return null;
+    }
+
+    /**
+     * 交换两个参数的值
+     * @param x
+     * @param y
+     * @return
+     */
+    public static String[] exchangeValue(String x,String y){
+        String temp = x;
+        x = y;
+        y = temp;
+        return new String[]{x,y};
+    }
+
+    /**
+     * 交换两个参数的值
+     * @param x
+     * @param y
+     * @return
+     */
+    public static int[] exchangeValue(int x,int y){
+        int temp = x;
+        x = y;
+        y = temp;
+        return new int[]{x,y};
+    }
+
+    /**
+     * 拨打电话
+     * @param context
+     * @param phoneNumber
+     */
+    public static void dial(Context context, String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 设置base请求类值
+     * @param body
+     * @param <T>
+     * @return
+     */
+    public static <T> BaseRequest<T> getBaseRequest(Context context,T body) {
+        BaseRequest<T> baseRequest = new BaseRequest<>();
+        if (body != null) {
+            baseRequest.setBody(body);
+        }
+//        if (context != null) {
+//            baseRequest.setSign(context.getSharedPreferences("cookie", Context.MODE_PRIVATE).getString("cookie",""));
+//        }
+        return baseRequest;
+    }
+
+}

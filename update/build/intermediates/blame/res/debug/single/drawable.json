@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/drawable/bg_item_left_top.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/drawable/bg_item_left_top.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/drawable/bg_item_right_top.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/drawable/bg_item_right_top.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/drawable/bg_corners_white.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/drawable/bg_corners_white.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/drawable/wheel_val.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/drawable/wheel_val.xml"
+    },
+    {
+        "merged": "/Users/gavin/Documents/project/UTruck-2.0/update/build/intermediates/res/merged/debug/drawable/wheel_bg.xml",
+        "source": "/Users/gavin/Documents/project/UTruck-2.0/common/build/intermediates/bundles/default/res/drawable/wheel_bg.xml"
+    }
+]

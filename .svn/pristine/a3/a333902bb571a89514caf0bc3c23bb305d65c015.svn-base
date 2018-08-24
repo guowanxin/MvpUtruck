@@ -1,0 +1,20 @@
+package tdh.ifm.android.imatch.app.ui.activity.user;
+
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+
+/**
+ * 会员等级
+ * Created by tdh on 2017/5/2.
+ */
+
+public class MemberLevelActivity extends BaseActivity {
+    @Override
+    public int getContentViewId() {
+        return 0;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+}

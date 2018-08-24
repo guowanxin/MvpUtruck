@@ -1,0 +1,171 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.app.ActionBar;
+import android.app.Dialog;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.tdh.common.utils.CommonUtil;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.activity.driver.MemberLevelEditActivity;
+import tdh.ifm.android.imatch.app.ui.adapter.DialogAdapter;
+import tdh.ifm.android.imatch.app.ui.view.FullyLinearLayoutManager;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * xyf
+ * 司机注册
+ * Created by tdh on 2017/4/28
+ */
+
+public class DriverRegisterActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+
+    @BindView(R.id.et_mobile)
+    EditText etMobile;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.et_plate_number)
+    EditText etPlateNumber;
+    @BindView(R.id.et_car_length)
+    EditText etCarLength;
+    @BindView(R.id.et_load)
+    EditText etLoad;
+    @BindView(R.id.et_car_type)
+    EditText etCarType;
+    @BindView(R.id.et_verification_code)
+    EditText etVerificationCode;
+    @BindView(R.id.btn_reset_identify_code)
+    TextView btnResetIdentifyCode;
+    @BindView(R.id.btn_drivate_register)
+    Button btnDrivateRegister;
+    @BindView(R.id.tv_register_agreement)
+    TextView tvRegisterAgreement;
+
+    private String mMoblie;
+    private String mPassword;
+    private String mName;
+    private String mPlateNumber;
+    private String mLoad;
+
+    private static int VANLENGTH = 1;
+    private static int TKTYPE = 2;
+
+    String tkcarTypeValues[] = {"高栏", "低栏", "厢式", "平板"};
+    String tkcartypeKeys[] = {"GL", "DL", "XS", "PB"};
+
+    String stkLenValues[] = {"17.5米", "16米", "13米", "12.5米", "9.6米", "8.2米", "7.8米", "7.6米", "7.2米", "6.8米", "6.2米", "5米", "4.2米"};
+    String stkLenKeys[] = {"17.5", "16", "13", "12.5", "9.6", "8.2", "7.8", "7.6", "7.2", "6.8", "6.2", "5", "4.2"};
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_driver_register;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initTitleView() {
+        titleview.getTv_title().setText("注册司机");
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private boolean isNull() {
+        if (TextUtils.isEmpty(getValue(etMobile))) {
+            CommonUtil.getToast(context, getString(R.string.prompt_mobile));
+            return false;
+        }
+        if (TextUtils.isEmpty(getValue(etPassword))) {
+            CommonUtil.getToast(context, getString(R.string.prompt_password));
+            return false;
+        }
+        if (TextUtils.isEmpty(getValue(etName))) {
+            CommonUtil.getToast(context, getString(R.string.prompt_name));
+            return false;
+        }
+        if (TextUtils.isEmpty(getValue(etPlateNumber))) {
+            CommonUtil.getToast(context, getString(R.string.prompt_plate_number));
+            return false;
+        }
+        if (TextUtils.isEmpty(getValue(etLoad))) {
+            CommonUtil.getToast(context, getString(R.string.prompt_load));
+            return false;
+        }
+        return true;
+    }
+
+    //选择车长
+    @OnClick(R.id.et_car_length)
+    void showVanlength() {
+        showDialogData(stkLenKeys, stkLenValues, VANLENGTH, "请选择车长");
+    }
+
+    //选择车型
+    @OnClick(R.id.et_car_type)
+    void showVanType() {
+        showDialogData(tkcartypeKeys, tkcarTypeValues, TKTYPE, "请选择车型");
+    }
+
+    @OnClick(R.id.btn_drivate_register)
+    public void onViewClicked() {
+        Util.intentToActivity(context,MemberLevelEditActivity.class);
+    }
+
+    //选择对话框
+    private void showDialogData(String[] keys, String[] values, int type, String title) {
+
+        final Dialog dialog1 = new Dialog(this, R.style.dialogNormal);
+        Window window = dialog1.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+
+        dialog1.setCancelable(true);
+        dialog1.setCanceledOnTouchOutside(true);
+        dialog1.show();
+        window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, 600);
+        dialog1.setContentView(R.layout.activity_dialog);
+        RecyclerView lv = (RecyclerView) dialog1.findViewById(R.id.recycler);
+        lv.setBackgroundColor(getResources().getColor(R.color.text_prompt));
+        DialogAdapter dialogAdapter = new DialogAdapter(this, keys, values, type, title);
+        lv.setLayoutManager(new FullyLinearLayoutManager(context));
+        dialogAdapter.setListener(new DialogAdapter.onClickIemListener() {
+            @Override
+            public void clickIemListener(String key, String value, int type) {
+                if (VANLENGTH == type) {
+                    etCarLength.setText(value);
+                }
+                if (TKTYPE == type) {
+                    etCarType.setText(value);
+                }
+                dialog1.cancel();
+            }
+        });
+
+        lv.setAdapter(dialogAdapter);
+        dialogAdapter.notifyDataSetChanged();
+    }
+
+
+}

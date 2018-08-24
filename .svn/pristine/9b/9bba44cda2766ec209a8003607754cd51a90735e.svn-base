@@ -1,0 +1,87 @@
+package tdh.ifm.android.imatch.app.model;
+
+import java.util.List;
+
+import tdh.ifm.android.imatch.app.base.BaseListener;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.RegisterDriver;
+import tdh.ifm.android.imatch.app.bean.RequestFriendList;
+import tdh.ifm.android.imatch.app.bean.RequestFriend;
+import tdh.ifm.android.imatch.app.bean.RequestLogin;
+import tdh.ifm.android.imatch.app.bean.RequestPhone;
+import tdh.ifm.android.imatch.app.bean.User;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/5 14:53
+ */
+public interface UserModel {
+
+    /**
+     * 用户登录
+     */
+    void loginIn(RequestLogin request, OnLoginInListener listener);
+
+    /**
+     * 用户退出登录
+     */
+    void loginOut(OnLoginOutListener listener);
+
+    /**
+     * 发送登录验证码
+     */
+    void sendLoginCode(RequestPhone requestPhone, OnLoginInListener listener);
+
+    /**
+     * 获取好友列表
+     */
+    void getFriendList(RequestFriendList request, UserModelImpl.OnFriendListener listener);
+
+    /**
+     * 获取好友列表
+     */
+    void getFriendList(RequestFriendList request, UserModelImpl.OnAddFriendList listener);
+
+    /**
+     * 删除好友
+     */
+    void deleteFriend(RequestFriend request, UserModelImpl.OnFriendListener listener);
+    /**
+     * 添加好友
+     */
+    void addFriend(RequestFriend request, UserModelImpl.OnAddFriendList listener);
+
+    /**
+     * 司机注册
+     */
+    void registerDriver(RegisterDriver registerDriver,UserModelImpl.onRegisterDriverListener listener);
+
+    interface OnFriendListener extends BaseListener {
+        void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse);
+        void onDeleteFriendSuccess(BaseResponse baseResponse);
+
+    }
+
+    interface OnAddFriendList extends BaseListener {
+        void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse);
+
+        void onAddFriendSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnLoginInListener extends BaseListener {
+        void onLoginInSuccess(BaseResponse<User> baseResponse);
+        void onSendLoginCodeSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnLoginOutListener extends BaseListener {
+        void onLoginOutSuccess(BaseResponse baseResponse);
+    }
+
+    interface onRegisterDriverListener extends BaseListener{
+        void onRegisterDriverSuccess(BaseResponse baseResponse);
+    }
+
+
+}

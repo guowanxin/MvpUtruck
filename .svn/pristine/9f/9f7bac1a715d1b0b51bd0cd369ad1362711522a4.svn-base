@@ -1,0 +1,20 @@
+package tdh.ifm.android.imatch.app.ui.activity.user;
+
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 20:20
+ */
+public class MemberLevelEditActivity extends BaseActivity {
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_memberlevel_edit;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+}

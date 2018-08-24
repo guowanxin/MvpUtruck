@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:background="@drawable/bg_white">
+
+                <LinearLayout
+                    android:id="@+id/llayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_mobile" />
+
+                        <EditText
+                            android:id="@+id/et_mobile"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="73px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_mobile"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt_right" />
+                    </LinearLayout>
+
+                    <View style="@style/line_style" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_password" />
+
+                        <EditText
+                            android:id="@+id/et_password"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="100px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_password"
+                            android:inputType="textPassword"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt_right" />
+
+                        <ImageView
+                            android:id="@+id/img_pwd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="48px"
+                            android:gravity="center"
+                            android:src="@mipmap/login_pwd_invisible" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_style" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_name" />
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="101px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_name"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt_right" />
+                    </LinearLayout>
+
+                    <View style="@style/line_style" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:background="@drawable/bg_white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_plate_number" />
+
+                        <EditText
+                            android:id="@+id/et_plate_number"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="73px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_plate_number"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt_right" />
+                    </LinearLayout>
+
+                    <View style="@style/line_style" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_car_length"
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_car_length" />
+
+                        <EditText
+                            android:id="@+id/et_car_length"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="51px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:textColor="@color/text_prompt"
+                            android:hint="@string/prompt_car_length"
+                            android:textColorHint="@color/text_prompt" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="48px"
+                            android:src="@mipmap/icon_arrow" />
+                    </LinearLayout>
+
+
+                    <View style="@style/line_style" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_load" />
+
+                        <EditText
+                            android:id="@+id/et_load"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="55px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_load"
+                            android:inputType="number"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt_right" />
+                    </LinearLayout>
+
+
+                    <View style="@style/line_style" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_car_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/reds" />
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_car_type" />
+
+                        <EditText
+                            android:id="@+id/et_car_type"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="99px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_car_type"
+                            android:focusable="false"
+                            android:textColor="@color/text_prompt"
+                            android:textColorHint="@color/text_prompt" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="48px"
+                            android:src="@mipmap/icon_arrow" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:layout_marginTop="23px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="21px"
+                    android:text="@string/txt_star"
+                    android:textColor="@color/text_prompt"
+                    android:visibility="invisible" />
+
+                <TextView
+                    style="@style/fs_row_text_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_verification_code" />
+
+                <EditText
+                    android:id="@+id/et_verification_code"
+                    style="@style/fs_row_text_right"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="73px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/text_prompt"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取验证码"
+                    android:textSize="32px"
+                    android:textColor="@color/title_background"
+                    android:layout_marginRight="48px"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_first"
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:layout_marginTop="20px" />
+
+            <Button
+                android:id="@+id/btn_drivate_register"
+                android:layout_width="match_parent"
+                android:layout_height="96px"
+                android:layout_marginLeft="100px"
+                android:layout_marginRight="100px"
+                android:layout_marginTop="37px"
+                android:background="@drawable/btn_bg"
+                android:text="@string/btn_register"
+                android:textColor="@color/white"
+                android:textSize="36px"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:id="@+id/ll_register_agree"
+                android:layout_marginTop="59px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="31px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24px"
+                    android:text="@string/txt_register_agree"
+                    android:textColor="#B3B3B3" />
+                <TextView
+                    android:id="@+id/tv_user_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10px"
+                    android:textSize="24px"
+                    android:text="@string/txt_register_agreement"
+                    android:textColor="@color/title_background" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

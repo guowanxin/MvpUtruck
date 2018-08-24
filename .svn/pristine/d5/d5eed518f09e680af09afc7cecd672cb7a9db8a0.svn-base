@@ -1,0 +1,155 @@
+package tdh.ifm.android.imatch.app.ui.fragment;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseFragment;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.MemberInfo;
+import tdh.ifm.android.imatch.app.presenter.MyPresenterImpl;
+import tdh.ifm.android.imatch.app.ui.activity.MyMessageActivity;
+import tdh.ifm.android.imatch.app.ui.activity.SettingsActivity;
+import tdh.ifm.android.imatch.app.ui.activity.driver.AttentionLineActivity;
+import tdh.ifm.android.imatch.app.ui.activity.driver.FriendListActivity;
+import tdh.ifm.android.imatch.app.ui.activity.driver.UpdateMemberInfoActivity;
+import tdh.ifm.android.imatch.app.ui.view.CircleImageView;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.ImageLoaderUtils;
+import tdh.ifm.android.imatch.app.utils.SharedPreferencesUtil;
+import tdh.ifm.android.imatch.app.utils.Util;
+import tdh.ifm.android.imatch.app.view.MyView;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/2 19:49
+ */
+public class MyFragment extends BaseFragment implements MyView {
+    @BindView(R.id.iv_touxiang)
+    CircleImageView ivTouxiang;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
+    @BindView(R.id.ll_attention_line)
+    LinearLayout llAttentionLine;
+    @BindView(R.id.ll_Transportation_control)
+    LinearLayout llTransportationControl;
+
+    private MyPresenterImpl myPresenter;
+
+    private String userType;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.fragment_my;
+    }
+
+    @Override
+    public void initData() {
+        userType = SharedPreferencesUtil.getValue(Constants.USERTYPE,"");
+        if (userType.equals(Constants.USERTYPE_S)) {
+            llAttentionLine.setVisibility(View.GONE);
+            llTransportationControl.setVisibility(View.VISIBLE);
+        }else if (userType.equals(Constants.USERTYPE_C)) {
+            llAttentionLine.setVisibility(View.VISIBLE);
+            llTransportationControl.setVisibility(View.GONE);
+        }else if (userType.equals(Constants.USERTYPE_AGENT)) {
+            llAttentionLine.setVisibility(View.VISIBLE);
+            llTransportationControl.setVisibility(View.GONE);
+        }else if (userType.equals(Constants.USERTYPE_L)) {
+            llAttentionLine.setVisibility(View.VISIBLE);
+            llTransportationControl.setVisibility(View.VISIBLE);
+        }
+
+        myPresenter = new MyPresenterImpl(context, this);
+
+        myPresenter.queryMember();
+    }
+
+    @OnClick(R.id.ll_wallet)
+    public void onLlWalletClicked() {
+    }
+
+    @OnClick(R.id.ll_member_info)
+    public void onLlMemberInfoClicked() {
+        Util.intentToActivity(context, UpdateMemberInfoActivity.class);
+    }
+
+    @OnClick(R.id.ll_attention_line)
+    public void onLlAttentionLineClicked() {
+        Util.intentToActivity(context, AttentionLineActivity.class);
+    }
+
+    @OnClick(R.id.ll_friend)
+    public void onLlFriendClicked() {
+        Util.intentToActivity(context, FriendListActivity.class);
+    }
+
+    @OnClick(R.id.ll_message)
+    public void onLlMessageClicked() {
+        Util.intentToActivity(context, MyMessageActivity.class);
+    }
+
+    @OnClick(R.id.ll_setting)
+    public void onSettingClicked() {
+        Util.intentToActivity(context, SettingsActivity.class);
+    }
+    @OnClick(R.id.ll_Transportation_control)
+    public void onViewClicked() {
+    }
+
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideprogress() {
+
+    }
+
+    @Override
+    public void showFailure(String str, Throwable t) {
+        APPLog.error(str, t);
+    }
+
+    @Override
+    public void showResState(int code) {
+        Util.setResCode(context, code);
+    }
+
+    @Override
+    public void onQueryMemberSuccess(BaseResponse<MemberInfo> baseResponse) {
+        if (baseResponse.isSuccess()) {
+            MemberInfo memberInfo = baseResponse.getBody();
+            if (memberInfo != null) {
+                if (!TextUtils.isEmpty(memberInfo.getLogo())) {
+                    ImageLoaderUtils.display(context, ivTouxiang, memberInfo.getLogo());
+                }
+                if (!TextUtils.isEmpty(memberInfo.getUsername())) {
+                    tvName.setText(memberInfo.getUsername());
+                }
+                if (!TextUtils.isEmpty(memberInfo.getMobile())) {
+                    tvPhone.setText(memberInfo.getMobile());
+                }
+                tvCount.setText(memberInfo.getTradeNum() + "");
+            }
+        }
+    }
+
+}

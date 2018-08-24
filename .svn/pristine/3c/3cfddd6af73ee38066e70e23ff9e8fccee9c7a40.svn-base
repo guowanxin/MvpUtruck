@@ -1,0 +1,223 @@
+package tdh.ifm.android.imatch.app.model;
+
+import java.util.List;
+
+import tdh.ifm.android.imatch.app.base.BaseListener;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.AttentionLine;
+import tdh.ifm.android.imatch.app.bean.FileType;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.MemberInfo;
+import tdh.ifm.android.imatch.app.bean.MyMessage;
+import tdh.ifm.android.imatch.app.bean.RegisterDriver;
+import tdh.ifm.android.imatch.app.bean.RegisterShipper;
+import tdh.ifm.android.imatch.app.bean.CompanyInfos;
+import tdh.ifm.android.imatch.app.bean.RequestAddAttentionLine;
+import tdh.ifm.android.imatch.app.bean.RequestDeleteAttentionLine;
+import tdh.ifm.android.imatch.app.bean.RequestFriend;
+import tdh.ifm.android.imatch.app.bean.RequestFriendList;
+import tdh.ifm.android.imatch.app.bean.RequestLogin;
+import tdh.ifm.android.imatch.app.bean.PersonInfo;
+import tdh.ifm.android.imatch.app.bean.RequestPhone;
+import tdh.ifm.android.imatch.app.bean.RequestResetPwd;
+import tdh.ifm.android.imatch.app.bean.User;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/5 14:53
+ */
+public interface UserModel {
+
+    /**
+     * 用户登录
+     */
+    void loginIn(RequestLogin request, OnLoginInListener listener);
+
+    /**
+     * 用户退出登录
+     */
+    void loginOut(OnLoginOutListener listener);
+
+    /**
+     * 发送登录验证码
+     */
+    void sendLoginCode(RequestPhone requestPhone, OnLoginInListener listener);
+
+    /**
+     * 查询当前登录基本信息 我的界面用
+     */
+    void queryMember(OnQueryMemberListener listener);
+
+    /**
+     * 获取好友列表
+     */
+    void getFriendList(RequestFriendList request, OnFriendListener listener);
+
+    /**
+     * 删除好友
+     */
+    void deleteFriend(RequestFriend request, OnDeleteFriendListener listener);
+    /**
+     * 添加好友
+     */
+    void addFriend(RequestFriend request, OnAddFriendList listener);
+
+    /**
+     * 注册司机
+     */
+    void registerDriver(RegisterDriver registerDriver,OnRegisterDriverListener listener);
+
+    /**
+     * 注册经纪人
+     */
+    void registerAgent(RegisterDriver registerDriver, OnRegisterAgentListener listener);
+    /**
+     * 注册货主
+     */
+    void registerShipper(RegisterShipper registerShipper,OnRegisterShipperListener listener);
+
+    /**
+     * 注册物流企业
+     */
+    void registerCompany(RegisterShipper registerShipper,OnRegisterCompanyListener listener);
+
+    /**
+     * 注册验证码
+     */
+    void sendRegisterCode(RequestPhone requestPhone,OnRegisterCodeListener listener);
+
+    /**
+     * 重置登录密码
+     */
+    void resetPassword(RequestResetPwd request,OnResetPwdListener listener);
+
+    /**
+     * 重置密码验证码
+     */
+    void sendPasswordCode(RequestPhone requestPhone,OnResetPwdListener listener);
+
+    /**
+     * 查询当前登录个人信息
+     */
+    void personMessage(OnPersonMessageListener listener);
+
+    /**
+     * 查询当前登录企业信息
+     */
+    void companyMessage(OnPersonMessageListener listener);
+
+    /**
+     * 修改个人信息审核
+     */
+    void updatePersonMessage(PersonInfo request, OnPersonMessageListener listener);
+
+    /**
+     * 修改会员信息审核
+     */
+    void updateCompanyMessage(CompanyInfos request, OnPersonMessageListener listener);
+
+    /**
+     * 查询认证信息
+     */
+    void queryMemberAuthInfo(OnMemberAuthInfoListener listener);
+
+    /**
+     * 提交认证信息
+     */
+    void completionMemberAuthInfo(List<FileType> fileTypes,OnMemberAuthInfoListener listener);
+
+    /**
+     * 我的消息列表
+     */
+    void myMessageList(MyMessage myMessage,OnMyMessageListener listener);
+
+    /**
+     * 关注路线列表
+     */
+    void attentionLineList(OnAttentionLineListener listener);
+
+    /**
+     * 添加关注路线
+     */
+    void addAttentionLine(RequestAddAttentionLine requestAddAttentionLine,OnAttentionLineListener listener);
+
+    /**
+     * 删除关注路线
+     */
+    void deleteAttentionLine(RequestDeleteAttentionLine requestDeleteAttentionLine, OnAttentionLineListener listener);
+
+
+    interface OnFriendListener extends BaseListener {
+        void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse);
+    }
+
+    interface OnDeleteFriendListener extends BaseListener{
+        void onDeleteFriendSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnAddFriendList extends BaseListener {
+        void onAddFriendSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnLoginInListener extends BaseListener {
+        void onLoginInSuccess(BaseResponse<User> baseResponse);
+        void onSendLoginCodeSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnLoginOutListener extends BaseListener {
+        void onLoginOutSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnRegisterDriverListener extends BaseListener{
+        void onRegisterDriverSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnRegisterAgentListener extends BaseListener {
+        void onRegisterAgentSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnRegisterShipperListener extends BaseListener{
+        void onRegisterShipperSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnRegisterCompanyListener extends BaseListener{
+        void onRegisterCompanySuccess(BaseResponse baseResponse);
+    }
+
+    interface OnRegisterCodeListener extends BaseListener{
+        void onSendRegisterCodeSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnQueryMemberListener extends BaseListener{
+        void onQueryMemberSuccess(BaseResponse<MemberInfo> baseResponse);
+    }
+
+    interface OnResetPwdListener extends BaseListener{
+        void onResetPwdSuccess(BaseResponse baseResponse);
+        void onSendPasswordCodeSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnMemberAuthInfoListener extends BaseListener{
+        void onQueryMemberAuthInfoSuccess(BaseResponse<List<FileType>> baseResponse);
+        void onCompletionMemberAuthInfoSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnPersonMessageListener extends BaseListener{
+        void onPersonMessageSuccess(BaseResponse<PersonInfo> baseResponse);
+        void onCompanyMessageSuccess(BaseResponse<CompanyInfos> baseResponse);
+        void onUpdatePersonMessageSuccess(BaseResponse baseResponse);
+        void onUpdateCompanyMessageSuccess(BaseResponse baseResponse);
+    }
+
+    interface OnMyMessageListener extends BaseListener{
+        void onMyMessageSuccess(BaseResponse<BasePageList<List<MyMessage>>> baseResponse);
+    }
+
+    interface OnAttentionLineListener extends BaseListener{
+        void onAttentionLineListSuccess(BaseResponse<List<AttentionLine>> baseResponse);
+        void onAddAttentionLineSuccess(BaseResponse baseResponse);
+        void onDeleteAttentionLineSuccess(BaseResponse baseResponse);
+    }
+
+}

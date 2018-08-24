@@ -1,0 +1,47 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/4 20:25
+ */
+public class AddFriendActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+
+    @BindString(R.string.txt_friend)
+    String title;
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_addfriend;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+
+    }
+}

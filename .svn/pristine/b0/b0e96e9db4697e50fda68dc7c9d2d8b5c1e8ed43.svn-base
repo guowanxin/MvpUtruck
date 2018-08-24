@@ -1,0 +1,67 @@
+package tdh.ifm.android.imatch.app.presenter;
+
+import android.content.Context;
+
+import tdh.ifm.android.imatch.app.base.BasePresenter;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.model.UserModel;
+import tdh.ifm.android.imatch.app.model.UserModelImpl;
+import tdh.ifm.android.imatch.app.view.LogoutView;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/8 16:51
+ */
+public class LogoutPresenterImpl implements UserModel.OnLoginOutListener,BasePresenter {
+
+    private LogoutView logoutView;
+    public UserModel userModel;
+
+
+    public LogoutPresenterImpl(Context context, LogoutView logoutView) {
+        this.logoutView = logoutView;
+        userModel = new UserModelImpl(context);
+
+    }
+
+    public void logout() {
+        userModel.loginOut(this);
+    }
+
+    @Override
+    public void onFailure(String str, Throwable t) {
+        if (logoutView == null) {
+            return;
+        }
+        logoutView.showFailure(str, t);
+        logoutView.hideprogress();
+    }
+
+    @Override
+    public void onResState(int code) {
+        if (logoutView == null) {
+            return;
+        }
+        logoutView.showResState(code);
+        logoutView.hideprogress();
+    }
+
+    @Override
+    public void onDestory() {
+        logoutView = null;
+        if (userModel != null) {
+            userModel = null;
+        }
+    }
+
+    @Override
+    public void onLoginOutSuccess(BaseResponse baseResponse) {
+        if (logoutView == null) {
+            return;
+        }
+        if (baseResponse != null) {
+            logoutView.onLoginOutSuccess(baseResponse);
+        }
+        logoutView.hideprogress();
+    }
+}

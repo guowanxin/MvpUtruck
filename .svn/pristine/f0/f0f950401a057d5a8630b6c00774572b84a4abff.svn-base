@@ -1,0 +1,110 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.SharedPreferencesUtil;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * xyf
+ * 修改会员信息
+ * Created by tdh on 2017/5/4.
+ */
+
+public class UpdateMemberInfoActivity extends BaseActivity {
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.et_name)
+    EditText etName;
+
+    @BindView(R.id.ll_person_message)
+    RelativeLayout llPersonSyS;
+    @BindView(R.id.et_plate_number)
+    EditText etPlateNumber;
+    @BindView(R.id.et_load)
+    EditText etLoad;
+    @BindView(R.id.et_car_length)
+    EditText etCarLength;
+    @BindView(R.id.et_car_type)
+    EditText etCarType;
+
+    @BindView(R.id.ll_enterprise_message)
+    RelativeLayout llEnterpriseSys;
+    @BindView(R.id.et_enterprise_name)
+    EditText etEnterpriseName;
+    @BindView(R.id.et_telephone)
+    EditText etTelephone;
+
+    @BindString(R.string.txt_update_member_info)
+    String title;
+    @BindView(R.id.tv_member_level)
+    TextView tvMemberLevel;
+
+    private String userType;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_update_member_info;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        userType = SharedPreferencesUtil.getValue(Constants.USERTYPE,"");
+        if (userType.equals(Constants.USERTYPE_S)) {
+            llPersonSyS.setVisibility(View.GONE);
+            llEnterpriseSys.setVisibility(View.VISIBLE);
+        }else if (userType.equals(Constants.USERTYPE_C)) {
+            llPersonSyS.setVisibility(View.VISIBLE);
+            llEnterpriseSys.setVisibility(View.GONE);
+        }else if (userType.equals(Constants.USERTYPE_AGENT)) {
+            llPersonSyS.setVisibility(View.GONE);
+            llEnterpriseSys.setVisibility(View.GONE);
+        }else if (userType.equals(Constants.USERTYPE_L)) {
+            llPersonSyS.setVisibility(View.GONE);
+            llEnterpriseSys.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //选择车长
+    @OnClick(R.id.ll_car_length)
+    void showVanlength() {
+        Util.showDialogData(context, Constants.stkLenKeys, Constants.stkLenValues, "请选择车长", etCarLength);
+    }
+
+    //选择车型
+    @OnClick(R.id.ll_car_type)
+    void showVanType() {
+        Util.showDialogData(context, Constants.tkcartypeKeys, Constants.tkcarTypeValues, "请选择车型", etCarType);
+    }
+
+    @OnClick(R.id.ll_member_level)
+    public void onLlMemberLevelClicked() {
+        Util.intentToActivity(context,MemberLevelActivity.class,null);
+    }
+
+    @OnClick(R.id.btn_submit_audit)
+    public void onBtnSubmitAuditClicked() {
+    }
+}

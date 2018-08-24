@@ -1,0 +1,132 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.activity.ChooseImageActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 20:20
+ */
+public class MemberLevelEditActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.tv_des)
+    TextView tvDes;
+    @BindView(R.id.iv_card_correct)
+    ImageView ivCardCorrect;
+    @BindView(R.id.iv_card_opposite)
+    ImageView ivCardOpposite;
+    @BindView(R.id.iv_drive_licence)
+    ImageView ivDriveLicence;
+    @BindView(R.id.iv_vehicle_licence)
+    ImageView ivVehicleLicence;
+    @BindView(R.id.iv_accountant_licence)
+    ImageView ivAccountantLicence;
+
+    @BindString(R.string.title_member_level)
+    String title;
+
+    /** 区别是注册跳过来的还是会员中心跳过来的  默认0是注册跳过来的  1会员中心跳过来的 **/
+    private int flag;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_memberlevel_edit;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        titleview.getTv_right_title().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        Bundle bundle = getIntent().getExtras();
+        flag = bundle.getInt("flag",0);
+        if (flag == 0) {
+            titleview.getTv_right_title().setVisibility(View.VISIBLE);
+            titleview.getTv_right_title().setText("跳过");
+            tvDes.setText("注册成功！您的会员等级：初级");
+        }else {
+            tvDes.setText("您的会员等级：初级");
+        }
+    }
+
+    @OnClick(R.id.iv_card_correct)
+    public void onIvCardCorrectClicked() {
+        Util.intentToActivity(context, ChooseImageActivity.class,1);
+    }
+
+    @OnClick(R.id.iv_card_opposite)
+    public void onIvCardOppositeClicked() {
+        Util.intentToActivity(context, ChooseImageActivity.class,2);
+    }
+
+    @OnClick(R.id.iv_drive_licence)
+    public void onIvDriveLicenceClicked() {
+        Util.intentToActivity(context, ChooseImageActivity.class,3);
+    }
+
+    @OnClick(R.id.iv_vehicle_licence)
+    public void onIvVehicleLicenceClicked() {
+        Util.intentToActivity(context, ChooseImageActivity.class,4);
+    }
+
+    @OnClick(R.id.iv_accountant_licence)
+    public void onIvAccountantLicenceClicked() {
+        Util.intentToActivity(context, ChooseImageActivity.class,5);
+    }
+
+    @OnClick(R.id.btn_submit)
+    public void onBtnSubmitClicked() {
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 10) {
+            String path = data.getStringExtra("imagePath");
+            APPLog.error("----path-----" + path);
+            switch (requestCode) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+        }
+    }
+}

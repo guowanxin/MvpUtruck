@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tdh.ifm.android.imatch.app" >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- 拨打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 扫码需要的权限（相机） -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+
+        <!-- AutoLayout适配尺寸 -->
+        <meta-data
+            android:name="design_width"
+            android:value="720" />
+        <meta-data
+            android:name="design_height"
+            android:value="1280" />
+
+        <activity android:name=".ui.activity.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.LoginActvity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.MyMessageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SetPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 司机角色 -->
+        <activity
+            android:name=".ui.activity.driver.DriverRegisterDriverActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.shipper.ShipperRegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.shipper.CompanyRegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.agent.AgentRegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.driver.AttentionLineActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.driver.FriendListActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.driver.UpdateMemberInfoActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.driver.MemberLevelActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.driver.MemberLevelEditActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.driver.AddFriendActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.MessageTwoActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.shipper.TransportControlActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.AboutUsActivity"
+                  android:screenOrientation="portrait"/>
+
+        <!-- 选择图片界面 -->
+        <activity
+            android:name=".ui.activity.ChooseImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogStyleBottom" />
+
+        <!-- webview界面 -->
+        <activity
+            android:name=".ui.activity.WebViewByCookieActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.WebViewNoTitleActivity"
+            android:screenOrientation="portrait" />
+
+        <!--百度地图-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="BuOA5y8aLK5nLamcIK2altUU8jGEe24k" />
+
+
+        <!--定位服务-->
+        <service android:name=".service.LocationService" />
+        <receiver android:name=".service.AlarmReceiver"/>
+
+        <service
+            android:name=".service.DemoPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice">
+        </service>
+        <service android:name=".service.DemoIntentService"/>
+
+
+
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${GETUI_APP_ID}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${GETUI_APP_KEY}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${GETUI_APP_SECRET}" />
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.service.message"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+
+        <receiver android:name="com.igexin.download.DownloadReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:exported="true"
+            android:authorities="downloads.${applicationId}"
+            android:process=":pushservice" />
+
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <!-- 个推SDK配置结束 -->
+
+
+    </application>
+
+</manifest>

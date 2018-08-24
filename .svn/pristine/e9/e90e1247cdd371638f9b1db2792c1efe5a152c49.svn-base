@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="window_background_transparent">#00000000</color>
+    <color name="dialog_common_green">#99CC66</color>
+
+    <color name="gray_background">#E3E3E3</color>
+
+    <color name="blue">#529ffe</color>
+
+</resources>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10px"
+
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20px">
+
+        <ImageView
+            android:id="@+id/img_head_portrait"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            app:srcCompat="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24px"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14px"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="left">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="张晓敏"
+                        android:textColor="@color/text_prompt"
+                        android:textSize="32px"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_fixture_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="45"
+                        android:textColor="@color/text_prompt"
+                        android:textSize="32px"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.8"
+                    android:gravity="center">
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14px"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="left">
+
+                    <TextView
+                        android:id="@+id/tv_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15634234523"
+                        android:textColor="@color/text_list"
+                        android:textSize="26px"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_shipment_plate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="180px"
+                        android:text="成交数"
+                        android:textColor="@color/text_list"
+                        android:textSize="26px"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10px"
+                android:src="@mipmap/img_tel"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                />
+</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:paddingTop="10px"
+            android:paddingBottom="10px">
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="50px"/>
+
+
+            <TextView
+
+                android:layout_marginLeft="24px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="成都市天地华宇物流有限公司"
+                android:textColor="@color/text_prompt"
+                android:textSize="32px"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:paddingTop="10px"
+            android:paddingBottom="10px">
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="50px"/>
+
+
+            <Button
+
+                android:layout_marginLeft="24px"
+                android:layout_width="wrap_content"
+                android:layout_height="34px"
+                android:background="@drawable/btn_corner_yellow"
+                android:text="@string/btn_register"
+                android:textColor="@color/yellow"
+                android:paddingLeft="10px"
+                android:paddingRight="10px"
+                android:textSize="20px"
+                android:gravity="center"
+                />
+            <Button
+
+                android:layout_marginLeft="24px"
+                android:layout_width="wrap_content"
+                android:layout_height="34px"
+                android:background="@drawable/btn_corner_yellow"
+                android:text="@string/btn_register"
+                android:textColor="@color/yellow"
+                android:paddingLeft="10px"
+                android:paddingRight="10px"
+                android:textSize="20px"
+                android:gravity="center"/>
+            <Button
+
+                android:layout_marginLeft="24px"
+                android:layout_width="wrap_content"
+                android:layout_height="34px"
+                android:background="@drawable/btn_corner_yellow"
+                android:text="@string/btn_register"
+                android:textColor="@color/yellow"
+                android:paddingLeft="10px"
+                android:paddingRight="10px"
+                android:textSize="20px"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

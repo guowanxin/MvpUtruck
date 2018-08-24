@@ -1,0 +1,229 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.bean.TestUser;
+import tdh.ifm.android.imatch.app.model.TestModel;
+import tdh.ifm.android.imatch.app.model.TestModelImpl;
+import tdh.ifm.android.imatch.app.ui.fragment.MyFragment;
+import tdh.ifm.android.imatch.app.utils.NetContant;
+
+public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.iv_tab_shouye)
+    ImageView ivTabShouye;
+    @BindView(R.id.tv_tab_shouye)
+    TextView tvTabShouye;
+    @BindView(R.id.iv_tab_order)
+    ImageView ivTabOrder;
+    @BindView(R.id.tv_tab_order)
+    TextView tvTabOrder;
+    @BindView(R.id.iv_tab_my)
+    ImageView ivTabMy;
+    @BindView(R.id.tv_tab_my)
+    TextView tvTabMy;
+
+    private static final int REQUEST_PERMISSION = 0;
+
+    /**
+     * 用于对Fragment进行管理
+     *
+     */
+    private FragmentManager fragmentManager;
+
+    private MyFragment myFragment;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initData() {
+        checkPermission();
+
+        fragmentManager = this.getSupportFragmentManager();
+
+        setTabSelection(0);
+    }
+
+    @OnClick({R.id.ll_tab_shouye, R.id.ll_tab_order, R.id.ll_tab_my})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_tab_shouye:
+                setTabSelection(0);
+                break;
+            case R.id.ll_tab_order:
+                setTabSelection(1);
+                break;
+            case R.id.ll_tab_my:
+                setTabSelection(2);
+                break;
+        }
+    }
+
+    /**
+     * 根据传入的index参数来设置选中的tab页。
+     *
+     * @param index 每个tab页对应的下标。0表示消息，1表示联系人，2表示动态，3表示设置。
+     */
+    private void setTabSelection(int index) {
+        // 每次选中之前先清楚掉上次的选中状态
+        clearSelection();
+        // 开启一个Fragment事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                // 当点击了计划tab时，改变控件的图片和文字颜色
+                ivTabShouye.setImageResource(R.mipmap.shouye_press);
+                tvTabShouye.setTextColor(getResources().getColor(R.color.tab_text_press));
+//                if (shouYeFragment == null) {
+//                    // 如果MessageFragment为空，则创建一个并添加到界面上
+//                    try {
+//                        shouYeFragment = new ShouYeFragment_();
+//                    } catch (Exception e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                    transaction.add(R.id.content, shouYeFragment);
+//                } else {
+//                    // 如果MessageFragment不为空，则直接将它显示出来
+//                    transaction.show(shouYeFragment);
+//                }
+                break;
+            case 1:
+                // 当点击了巡检详情tab时，改变控件的图片和文字颜色
+                ivTabOrder.setImageResource(R.mipmap.shouye_order_press);
+                tvTabOrder.setTextColor(getResources().getColor(R.color.tab_text_press));
+//                if (sysMessageFragment == null) {
+//                    // 如果MessageFragment为空，则创建一个并添加到界面上
+//                    try {
+//                        sysMessageFragment = new SysMessageFragment_();
+//                    } catch (Exception e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                    transaction.add(R.id.content, sysMessageFragment);
+//                } else {
+//                    // 如果MessageFragment不为空，则直接将它显示出来
+//                    transaction.show(sysMessageFragment);
+//                    sysMessageFragment.notifyUIData();
+//                }
+                break;
+            case 2:
+                // 当点击了我的tab时，改变控件的图片和文字颜色
+                ivTabMy.setImageResource(R.mipmap.shouye_wode_press);
+                tvTabMy.setTextColor(getResources().getColor(R.color.tab_text_press));
+                if (myFragment == null) {
+                    // 如果SettingFragment为空，则创建一个并添加到界面上
+                    myFragment = new MyFragment();
+                    transaction.add(R.id.content, myFragment);
+                } else {
+                    // 如果SettingFragment不为空，则直接将它显示出来
+                    transaction.show(myFragment);
+                }
+                break;
+
+        }
+        transaction.commit();
+    }
+
+    /**
+     * 清除掉所有的选中状态。
+     */
+    private void clearSelection() {
+        ivTabShouye.setImageResource(R.mipmap.shouye);
+        tvTabShouye.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+        ivTabOrder.setImageResource(R.mipmap.shouye_order);
+        tvTabOrder.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+        ivTabMy.setImageResource(R.mipmap.shouye_wode);
+        tvTabMy.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+    }
+
+    /**
+     * 将所有的Fragment都置为隐藏状态。
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+//        if (shouYeFragment != null) {
+//            transaction.hide(shouYeFragment);
+//        }
+//        if (sysMessageFragment != null) {
+//            transaction.hide(sysMessageFragment);
+//        }
+        if (myFragment != null) {
+            transaction.hide(myFragment);
+        }
+    }
+
+    private void checkPermission() {
+        PackageManager pkgManager = getPackageManager();
+        // 读写 sd card 权限非常重要, android6.0默认禁止的, 建议初始化之前就弹窗让用户赋予该权限
+        boolean sdCardWritePermission =
+                pkgManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, getPackageName()) == PackageManager.PERMISSION_GRANTED;
+
+        // read phone state用于获取 imei 设备信息
+        boolean phoneSatePermission =
+                pkgManager.checkPermission(Manifest.permission.READ_PHONE_STATE, getPackageName()) == PackageManager.PERMISSION_GRANTED;
+
+        APPLog.error(NetContant.TAG, "sdCardWritePermission is " + sdCardWritePermission +
+                "  and phoneSatePermission is " + phoneSatePermission);
+        if (Build.VERSION.SDK_INT >= 23 && !sdCardWritePermission || !phoneSatePermission) {
+            requestPermission();
+        }
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.
+                WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, REQUEST_PERMISSION);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode == 10) {
+            String path = data.getStringExtra("imagePath");
+            APPLog.error("----path-----" + path);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION) {
+            if ((grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+            } else {
+                APPLog.error(NetContant.TAG, "We highly recommend that you need to grant the special permissions before initializing the SDK, otherwise some "
+                        + "functions will not work");
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+}

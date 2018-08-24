@@ -1,0 +1,39 @@
+package tdh.ifm.android.imatch.app.bean;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/10 10:50
+ */
+public class FileType {
+    /* 文件地址 */
+    private String url;
+    /* 10=营业执照 20=税务登记证 30=开户许可证 40=管理员身份证正面 41=管理员身份证反面 42=身份证正面 43=身份证反面
+      * 50=道路运输许可证 60=驾驶证 70行驶证 80运营证 */
+    private String refType;
+    /* 文件资源  该字段上传图片时用 */
+    private byte[] bytes;
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+}

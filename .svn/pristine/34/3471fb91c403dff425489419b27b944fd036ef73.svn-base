@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:baselineAligned="false"
+              android:clipToPadding="false"
+              android:fitsSystemWindows="true"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <com.tdh.rpms.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:background="@drawable/bg_white">
+
+                <LinearLayout
+                    android:id="@+id/llayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_mobile"/>
+
+                        <EditText
+                            android:id="@+id/et_mobile"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="80px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_mobile"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+                    <View style="@style/line_style"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_password"/>
+
+                        <EditText
+                            android:id="@+id/et_password"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="110px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:hint="@string/prompt_password"
+                            android:textColorHint="@color/text_prompt_right"/>
+
+                        <ImageView
+                            android:layout_width="45px"
+                            android:layout_height="34px"
+                            android:layout_marginLeft="70px"
+                            android:layout_marginRight="48px"
+                            android:gravity="center"
+                            android:src="@mipmap/register_invisible"
+                          />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_style"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_name"/>
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="110px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_name"
+                            android:inputType="number"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+                    <View style="@style/line_style"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:background="@drawable/bg_white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_plate_number"/>
+
+                        <EditText
+                            android:id="@+id/et_plate_number"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="80px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_plate_number"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+                    <View style="@style/line_style"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_car_length"/>
+
+                        <EditText
+                            android:id="@+id/et_car_length"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="65px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:hint="@string/prompt_car_length"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+
+                    <View style="@style/line_style"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_load"/>
+
+                        <EditText
+                            android:id="@+id/et_load"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="65px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_load"
+                            android:inputType="number"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+
+                    <View style="@style/line_style"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:text="@string/txt_star"
+                            android:textColor="@color/text_prompt"/>
+
+                        <TextView
+                            style="@style/fs_row_text_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_car_type"/>
+
+                        <EditText
+                            android:id="@+id/et_car_type"
+                            style="@style/fs_row_text_right"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="110px"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/prompt_car_type"
+                            android:textColorHint="@color/text_prompt_right"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:layout_marginTop="20px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:text="@string/txt_star"
+                    android:textColor="@color/text_prompt"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    style="@style/fs_row_text_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_verification_code"/>
+
+                <EditText
+                    android:id="@+id/et_verification_code"
+                    style="@style/fs_row_text_right"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="85px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:text="sss"
+                    android:textColorHint="@color/text_prompt_right"/>
+
+                <TextView
+                    android:id="@+id/btn_reset_identify_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60px"
+                    android:layout_marginLeft="70px"
+                    android:layout_marginRight="51px"
+                    android:gravity="center"
+                    android:text="@string/get_identify_code"
+                    android:textColor="@color/tab_text_press"
+                    android:textSize="32px"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_first"
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:layout_marginTop="20px"/>
+
+            <Button
+                android:id="@+id/btn_drivate_register"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_marginBottom="60px"
+                android:layout_marginLeft="60px"
+                android:layout_marginRight="60px"
+                android:background="@color/tab_text_press"
+                android:text="@string/btn_register"
+                android:textColor="@color/white"
+                android:textSize="36px"/>
+
+            <TextView
+                android:id="@+id/tv_register_agreement"
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20px"
+                android:text="注册即视为已同意《用户协议及申明》"/>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

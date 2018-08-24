@@ -1,0 +1,28 @@
+package tdh.ifm.android.imatch.app.bean;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/16 20:07
+ */
+public class RequestAddAttentionLine {
+    /*起始城市*/
+    private Integer orginalCt;
+    /*目的城市*/
+    private Integer destinationCt;
+
+    public Integer getOrginalCt() {
+        return orginalCt;
+    }
+
+    public void setOrginalCt(Integer orginalCt) {
+        this.orginalCt = orginalCt;
+    }
+
+    public Integer getDestinationCt() {
+        return destinationCt;
+    }
+
+    public void setDestinationCt(Integer destinationCt) {
+        this.destinationCt = destinationCt;
+    }
+}

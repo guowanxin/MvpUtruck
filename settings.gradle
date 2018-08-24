@@ -1,0 +1,1 @@
+include ':app', ':common', ':update', ':autolayout', ':retrofit', ':recyclerviewlibrary', ':photoView'

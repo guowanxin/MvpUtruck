@@ -1,0 +1,16 @@
+package tdh.ifm.android.imatch.app.view;
+
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.base.BaseView;
+
+/**
+ * Created by tdh on 2017/5/10.
+ */
+
+public interface UserTypeMessageView extends BaseView{
+    void onPersonMessageSuccess(BaseResponse baseResponse);
+    void onCompanyMessageSuccess(BaseResponse baseResponse);
+
+    void onUpdatePersonMessageSuccess(BaseResponse baseResponse);
+    void onUpdateCompanyMessageSuccess(BaseResponse baseResponse);
+}

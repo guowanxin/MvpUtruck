@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_update_password" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60px"
+                android:src="@mipmap/icon_arrow" />
+        </LinearLayout>
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:id="@+id/ll_check_update"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_check_update" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_version_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="V2.0.0"
+                android:textColor="@color/text_prompt"
+                android:textSize="30px" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="60px"
+                android:src="@mipmap/icon_arrow" />
+        </LinearLayout>
+
+        <View style="@style/line_style" />
+
+        <LinearLayout
+            android:id="@+id/ll_about_us"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/fs_row_text_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22px"
+                android:text="@string/txt_aabout_us" />
+
+            <View
+                android:layout_width="0px"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60px"
+                android:src="@mipmap/icon_arrow" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_first"
+        android:layout_width="match_parent"
+        android:layout_height="10px"
+        android:layout_marginTop="20px" />
+
+    <Button
+        android:id="@+id/btn_exit_login"
+        android:layout_width="match_parent"
+        android:layout_height="96px"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginTop="37px"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="@string/btn_exit"
+        android:textColor="@color/white"
+        android:textSize="36px" />
+</LinearLayout>

@@ -1,0 +1,37 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Created by tdh on 2017/5/4.
+ */
+
+public class SettingsActivity extends BaseActivity {
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_settings;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @OnClick(R.id.ll_update_password)
+    void onUpdatePwd(){
+        Util.intentToActivity(context,SetPasswordActivity.class);
+    }
+
+    @OnClick(R.id.ll_check_update)
+    void onCkeck(){
+
+    }
+    @OnClick(R.id.ll_about_us)
+    void onAbout(){
+
+    }
+}

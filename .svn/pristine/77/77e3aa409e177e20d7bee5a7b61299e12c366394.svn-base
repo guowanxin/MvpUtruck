@@ -1,0 +1,187 @@
+package tdh.ifm.android.imatch.app.service;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.IBinder;
+import android.os.SystemClock;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+
+import tdh.ifm.android.imatch.app.bean.Location;
+import tdh.ifm.android.imatch.app.model.UserModel;
+import tdh.ifm.android.imatch.app.model.UserModelImpl;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.SharedPreferencesUtil;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/11 17:27
+ */
+public class LocationService extends Service {
+
+    private static final String TAG = "LocationService";
+
+    private Context context;
+
+    public LocationClient mLocationClient = null;
+    public BDLocationListener myListener;
+
+    private static final long CHECK_INTERVAL = 15 * 60 * 1000L;
+
+    private UserModel userModel;
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = this;
+
+        Log.e(TAG, "LocationService onCreate called");
+        userModel = new UserModelImpl(context);
+
+        myListener = new MyLocationListener();
+        mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+        mLocationClient.registerLocationListener(myListener); // 注册监听函数
+
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
+        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+        int span=1000;
+        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+        option.setOpenGps(true);//可选，默认false,设置是否使用gps
+        option.setLocationNotify(true);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
+        mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        mLocationClient.start();
+
+        if (mLocationClient != null && mLocationClient.isStarted()) {
+            mLocationClient.requestLocation();
+        } else {
+            Log.e(TAG, "LocationClient is null or not started");
+        }
+
+        Intent intent_check = new Intent(context,AlarmReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+                intent_check, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        long firstTime = SystemClock.elapsedRealtime() + CHECK_INTERVAL;
+
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,firstTime,pi);
+
+        return START_STICKY;
+    }
+
+    private class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation bdl) {
+
+            Log.e(TAG, "Acquired location:" + getRawLocationString(bdl));
+
+            if (bdl.getLocType() != 61 && bdl.getLocType() != 161) {
+                mLocationClient.stop();
+                return;
+            }
+
+            Location myLocation = Location.fromBaiduLocation(bdl);
+
+            Log.e(TAG, "Saving location.");
+
+            SharedPreferencesUtil.setValue(Constants.LAT,myLocation.getLat()+"");
+            SharedPreferencesUtil.setValue(Constants.LON,myLocation.getLng()+"");
+
+            myLocation.setPlateNo(SharedPreferencesUtil.getValue(Constants.PLATENO,""));
+            myLocation.setPlateNo("豫SHN888");
+
+            if (SharedPreferencesUtil.getValue(Constants.USERTYPE,"").equals(Constants.USERTYPE_C)) {
+                if (userModel == null) {
+                    userModel = new UserModelImpl(context);
+                }
+                userModel.location(myLocation);
+            }
+
+            mLocationClient.stop();
+        }
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+
+        }
+    }
+
+    private String getRawLocationString(BDLocation location) {
+        StringBuilder sb = new StringBuilder(256);
+        sb.append("time : ");
+        sb.append(location.getTime());
+        sb.append("\nerror code : ");
+        sb.append(location.getLocType());
+        sb.append("\nlatitude : ");
+        sb.append(location.getLatitude());
+        sb.append("\nlontitude : ");
+        sb.append(location.getLongitude());
+        sb.append("\nradius : ");
+        sb.append(location.getRadius());
+        if (location.getLocType() == BDLocation.TypeGpsLocation) {
+            sb.append("\nspeed : ");
+            sb.append(location.getSpeed());
+            sb.append("\nsatellite : ");
+            sb.append(location.getSatelliteNumber());
+        } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+            sb.append("\naddr : ");
+            sb.append(location.getAddrStr());
+        }
+
+        return sb.toString();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.e(TAG, "我取消定位了");
+
+        if (null != mLocationClient) {
+            mLocationClient.stop();
+            mLocationClient = null;
+        }
+
+        Intent intent_check = new Intent(context,AlarmReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+                intent_check, PendingIntent.FLAG_NO_CREATE);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (pi != null) {
+            Log.e(TAG, "cancel alarm");
+            alarmManager.cancel(pi);
+        }else {
+            Log.e(TAG, "pi == null");
+        }
+    }
+
+}

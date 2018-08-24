@@ -1,0 +1,258 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.CommonUtil;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.base.BaseApplication;
+import tdh.ifm.android.imatch.app.service.LocationService;
+import tdh.ifm.android.imatch.app.ui.fragment.MyFragment;
+import tdh.ifm.android.imatch.app.ui.fragment.WebViewFragment;
+import tdh.ifm.android.imatch.app.update.CheckUpdateTask;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.NetContant;
+
+public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.iv_tab_shouye)
+    ImageView ivTabShouye;
+    @BindView(R.id.tv_tab_shouye)
+    TextView tvTabShouye;
+    @BindView(R.id.iv_tab_order)
+    ImageView ivTabOrder;
+    @BindView(R.id.tv_tab_order)
+    TextView tvTabOrder;
+    @BindView(R.id.iv_tab_my)
+    ImageView ivTabMy;
+    @BindView(R.id.tv_tab_my)
+    TextView tvTabMy;
+
+    /**
+     * 用于对Fragment进行管理
+     *
+     */
+    private FragmentManager fragmentManager;
+
+    private WebViewFragment webViewFragment1;
+    private WebViewFragment webViewFragment2;
+    private MyFragment myFragment;
+
+    private long mExitTime;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initData() {
+        checkPermission();
+
+        fragmentManager = this.getSupportFragmentManager();
+
+        new CheckUpdateTask(this, true,true).execute();
+
+        setTabSelection(0);
+    }
+
+    @OnClick({R.id.ll_tab_shouye, R.id.ll_tab_order, R.id.ll_tab_my})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_tab_shouye:
+                setTabSelection(0);
+                break;
+            case R.id.ll_tab_order:
+                setTabSelection(1);
+                break;
+            case R.id.ll_tab_my:
+                setTabSelection(2);
+                break;
+        }
+    }
+
+    /**
+     * 根据传入的index参数来设置选中的tab页。
+     *
+     * @param index 每个tab页对应的下标。0表示消息，1表示联系人，2表示动态，3表示设置。
+     */
+    private void setTabSelection(int index) {
+        // 每次选中之前先清楚掉上次的选中状态
+        clearSelection();
+        // 开启一个Fragment事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                // 当点击了计划tab时，改变控件的图片和文字颜色
+                ivTabShouye.setImageResource(R.mipmap.shouye_press);
+                tvTabShouye.setTextColor(getResources().getColor(R.color.tab_text_press));
+                if (webViewFragment1 == null) {
+                    // 如果MessageFragment为空，则创建一个并添加到界面上
+                    try {
+                        webViewFragment1 = new WebViewFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("flag",1);
+                        bundle.putString(Constants.URL, NetContant.HTML_SHOUYE);
+                        webViewFragment1.setArguments(bundle);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    transaction.add(R.id.content, webViewFragment1);
+                } else {
+                    // 如果MessageFragment不为空，则直接将它显示出来
+                    transaction.show(webViewFragment1);
+                }
+                break;
+            case 1:
+                // 当点击了巡检详情tab时，改变控件的图片和文字颜色
+                ivTabOrder.setImageResource(R.mipmap.shouye_order_press);
+                tvTabOrder.setTextColor(getResources().getColor(R.color.tab_text_press));
+                if (webViewFragment2 == null) {
+                    // 如果MessageFragment为空，则创建一个并添加到界面上
+                    try {
+                        webViewFragment2 = new WebViewFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.URL, NetContant.HTML_ORDERLIST);
+                        webViewFragment2.setArguments(bundle);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    transaction.add(R.id.content, webViewFragment2);
+                } else {
+                    // 如果MessageFragment不为空，则直接将它显示出来
+                    transaction.show(webViewFragment2);
+                }
+                break;
+            case 2:
+                // 当点击了我的tab时，改变控件的图片和文字颜色
+                ivTabMy.setImageResource(R.mipmap.shouye_wode_press);
+                tvTabMy.setTextColor(getResources().getColor(R.color.tab_text_press));
+                if (myFragment == null) {
+                    // 如果SettingFragment为空，则创建一个并添加到界面上
+                    myFragment = new MyFragment();
+                    transaction.add(R.id.content, myFragment);
+                } else {
+                    // 如果SettingFragment不为空，则直接将它显示出来
+                    transaction.show(myFragment);
+                }
+                break;
+
+        }
+        transaction.commit();
+    }
+
+    /**
+     * 清除掉所有的选中状态。
+     */
+    private void clearSelection() {
+        ivTabShouye.setImageResource(R.mipmap.shouye);
+        tvTabShouye.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+        ivTabOrder.setImageResource(R.mipmap.shouye_order);
+        tvTabOrder.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+        ivTabMy.setImageResource(R.mipmap.shouye_wode);
+        tvTabMy.setTextColor(getResources()
+                .getColor(R.color.tab_text));
+    }
+
+    /**
+     * 将所有的Fragment都置为隐藏状态。
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (webViewFragment1 != null) {
+            transaction.hide(webViewFragment1);
+        }
+        if (webViewFragment2 != null) {
+            transaction.hide(webViewFragment2);
+        }
+        if (myFragment != null) {
+            transaction.hide(myFragment);
+        }
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23){
+            try {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+                    requestPermission();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else {
+            //启动每隔15分钟定位服务
+            Intent intent = new Intent(context, LocationService.class);
+            startService(intent);
+        }
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.
+                ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE}, 13);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 13: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    //启动每隔15分钟定位服务
+                    Intent intent = new Intent(context, LocationService.class);
+                    startService(intent);
+                } else {
+
+                    //启动每隔15分钟定位服务
+                    Intent intent = new Intent(context, LocationService.class);
+                    startService(intent);
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                CommonUtil.getToast(context, "再按一次退出优卡");
+                mExitTime = System.currentTimeMillis();
+            } else { //-- + 完全 退出的 方法
+                BaseApplication.getInstance().exit();
+            }
+        }
+        return true;
+    }
+
+}

@@ -1,0 +1,109 @@
+package tdh.ifm.android.imatch.app.base;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/24 16:56
+ */
+public abstract class BaseFragment extends Fragment {
+
+    protected Context context;
+
+    public Dialog dialog;
+
+    private Unbinder unbinder;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        context = getActivity();
+        View view = inflater.inflate(getContentViewId(), container, false);
+
+        unbinder = ButterKnife.bind(this,view);
+
+        dialog = Util.createLoadingDialog(context);
+
+        initTitleView();
+
+        initData();
+
+        return view;
+    }
+
+    public abstract int getContentViewId();
+
+    /**
+     * 初始化标题栏
+     */
+    public void initTitleView() {
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    public abstract void initData();
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    /**
+     * 弹出加载框
+     */
+    public void dialogShow() {
+        if (dialog != null) {
+            dialog.show();
+        }
+    }
+
+    /**
+     * 取消加载框
+     */
+    public void dialogHide() {
+        if (dialog != null) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+    }
+
+    /**
+     * EditText取值
+     */
+    public String getValue(EditText text) {
+        if (null != text && View.VISIBLE == text.getVisibility()) {
+            return text.getText().toString().trim();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * TextView取值
+     */
+    public String getValue(TextView text) {
+        if (null != text && View.VISIBLE == text.getVisibility()) {
+            return text.getText().toString();
+        } else {
+            return "";
+        }
+    }
+
+}

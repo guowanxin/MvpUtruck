@@ -1,0 +1,105 @@
+package tdh.ifm.android.imatch.app.presenter;
+
+import android.content.Context;
+
+import java.util.List;
+
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.FriendListRequest;
+import tdh.ifm.android.imatch.app.bean.FriendRequest;
+import tdh.ifm.android.imatch.app.model.UserModel;
+import tdh.ifm.android.imatch.app.model.UserModelImpl;
+import tdh.ifm.android.imatch.app.view.FriendView;
+
+
+public class FriendPresenterImpl implements FriendPresenter,UserModelImpl.OnUserListener{
+
+    private FriendView friendView;
+    public UserModel userModel;
+
+
+    public FriendPresenterImpl(Context context, FriendView friendView) {
+        this.friendView = friendView;
+        userModel = new UserModelImpl(context);
+
+    }
+    @Override
+    public void onFailure(String str, Throwable t) {
+        friendView.showFailure(str, t);
+        friendView.hideprogress();
+    }
+
+    @Override
+    public void onResState(int code) {
+        friendView.showResState(code);
+        friendView.hideprogress();
+    }
+
+
+
+    @Override
+    public void friendList(FriendListRequest request) {
+        friendView.showProgress();
+        userModel.getFriendList(request,this);
+    }
+
+    @Override
+    public void friendDetail(FriendRequest request) {
+        friendView.showProgress();
+        userModel.getFriendDetail(request,this);
+    }
+
+    @Override
+    public void deleteFriend(FriendRequest request) {
+        friendView.showProgress();
+        userModel.deleteFriend(request,this);
+    }
+
+    @Override
+    public void addFriend(FriendRequest request) {
+        friendView.showProgress();
+        userModel.addFriend(request,this);
+    }
+
+    @Override
+    public void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse) {
+        if (baseResponse != null) {
+            friendView.onFriendListSuccess(baseResponse);
+        }else {
+
+        }
+        friendView.hideprogress();
+    }
+
+    @Override
+    public void onFriendDetailSuccess(BaseResponse<FriendInfo> baseResponse) {
+        if (baseResponse != null) {
+            friendView.onFriendDetailSuccess(baseResponse);
+        }else {
+
+        }
+        friendView.hideprogress();
+    }
+
+    @Override
+    public void onDeleteFriendSuccess(BaseResponse baseResponse) {
+        if (baseResponse != null) {
+            friendView.onDeleteFriendSuccess(baseResponse);
+        }else {
+
+        }
+        friendView.hideprogress();
+    }
+
+    @Override
+    public void onAddFriendSuccess(BaseResponse baseResponse) {
+        if (baseResponse != null) {
+            friendView.onAddFriendSuccess(baseResponse);
+        }else {
+
+        }
+        friendView.hideprogress();
+    }
+}

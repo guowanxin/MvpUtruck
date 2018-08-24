@@ -1,0 +1,203 @@
+package tdh.ifm.android.imatch.app.ui.activity.driver;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.CommonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.AttentionLine;
+import tdh.ifm.android.imatch.app.bean.RequestAddAttentionLine;
+import tdh.ifm.android.imatch.app.bean.RequestDeleteAttentionLine;
+import tdh.ifm.android.imatch.app.presenter.AttentionLinePresenterImpl;
+import tdh.ifm.android.imatch.app.ui.activity.WebViewByCookieActivity;
+import tdh.ifm.android.imatch.app.ui.activity.WebViewNoTitleActivity;
+import tdh.ifm.android.imatch.app.ui.adapter.AttentionLineAdapter;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.NetContant;
+import tdh.ifm.android.imatch.app.utils.Util;
+import tdh.ifm.android.imatch.app.view.AttentionLineView;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 19:15
+ */
+public class AttentionLineActivity extends BaseActivity implements AttentionLineView{
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+    @BindView(R.id.tv_start)
+    TextView tvStart;
+    @BindView(R.id.tv_end)
+    TextView tvEnd;
+
+    @BindString(R.string.txt_attention_line)
+    String title;
+
+    private AttentionLineAdapter adapter;
+    private List<AttentionLine> attentionLineList;
+
+    private AttentionLinePresenterImpl attentionLinePresenter;
+
+    private int orginalCt;
+    private int destinationCt;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_attention_line;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        attentionLineList = new ArrayList<>();
+        recycler.setLayoutManager(new LinearLayoutManager(context));
+
+        adapter = new AttentionLineAdapter(context);
+        recycler.setAdapter(adapter);
+        adapter.setLineListener(new AttentionLineAdapter.OnDeleteLineListener() {
+            @Override
+            public void onDeleteLine(String routeId) {
+                RequestDeleteAttentionLine requestDeleteAttentionLine = new RequestDeleteAttentionLine();
+                requestDeleteAttentionLine.setRouteId(routeId);
+                attentionLinePresenter.deleteAttentionLine(requestDeleteAttentionLine);
+            }
+        });
+
+        attentionLinePresenter = new AttentionLinePresenterImpl(context,this);
+
+        attentionLinePresenter.attentionLineList();
+    }
+
+    @OnClick(R.id.tv_start)
+    public void onTvStartClicked() {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.URL, "http://192.168.65.15:7777/#/cityList");
+        Util.intentToActivity(context, WebViewByCookieActivity.class,10,bundle);
+    }
+
+    @OnClick(R.id.tv_end)
+    public void onTvEndClicked() {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.URL, "http://192.168.65.15:7777/#/cityList");
+        Util.intentToActivity(context, WebViewByCookieActivity.class,20,bundle);
+    }
+
+    @OnClick(R.id.tv_add)
+    public void onTvAddClicked() {
+        if (TextUtils.isEmpty(getValue(tvStart))) {
+            CommonUtil.getToast(context,"请选择起点");
+            return;
+        }
+        if (TextUtils.isEmpty(getValue(tvEnd))) {
+            CommonUtil.getToast(context,"请选择终点");
+            return;
+        }
+        RequestAddAttentionLine requestAddAttentionLine = new RequestAddAttentionLine();
+        requestAddAttentionLine.setOriginalCt(orginalCt);
+        requestAddAttentionLine.setDestinationCt(destinationCt);
+        attentionLinePresenter.addAttentionLine(requestAddAttentionLine);
+    }
+
+    @OnClick(R.id.iv_line)
+    public void onIvLineClicked() {
+        String[] strings = Util.exchangeValue(getValue(tvStart),getValue(tvEnd));
+        tvStart.setText(strings[0]);
+        tvEnd.setText(strings[1]);
+
+        int[] ints = Util.exchangeValue(orginalCt,destinationCt);
+        orginalCt = ints[0];
+        destinationCt = ints[1];
+    }
+
+    @Override
+    public void showProgress() {
+        dialogShow();
+    }
+
+    @Override
+    public void hideprogress() {
+        dialogHide();
+    }
+
+    @Override
+    public void showFailure(String str, Throwable t) {
+        APPLog.error(str, t);
+    }
+
+    @Override
+    public void showResState(int code) {
+        Util.setResCode(context, code);
+    }
+
+    @Override
+    public void onAttentionLineListSuccess(BaseResponse<List<AttentionLine>> baseResponse) {
+        attentionLineList = baseResponse.getBody();
+        adapter.setData(attentionLineList);
+    }
+
+    @Override
+    public void onAddAttentionLineSuccess(BaseResponse baseResponse) {
+        if (!TextUtils.isEmpty(baseResponse.getMessage())) {
+            CommonUtil.getToast(context,baseResponse.getMessage());
+        }
+        if (baseResponse.isSuccess()) {
+            attentionLinePresenter.attentionLineList();
+        }
+    }
+
+    @Override
+    public void onDeleteAttentionLineSuccess(BaseResponse baseResponse) {
+        if (!TextUtils.isEmpty(baseResponse.getMessage())) {
+            CommonUtil.getToast(context,baseResponse.getMessage());
+        }
+        if (baseResponse.isSuccess()) {
+            attentionLinePresenter.attentionLineList();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 10) {
+            switch (requestCode) {
+                case 10:
+                    tvStart.setText(data.getStringExtra("cityName"));
+                    orginalCt = Integer.parseInt(data.getStringExtra("cityCode"));
+                    break;
+                case 20:
+                    tvEnd.setText(data.getStringExtra("cityName"));
+                    destinationCt = Integer.parseInt(data.getStringExtra("cityCode"));
+                    break;
+            }
+        }
+    }
+}

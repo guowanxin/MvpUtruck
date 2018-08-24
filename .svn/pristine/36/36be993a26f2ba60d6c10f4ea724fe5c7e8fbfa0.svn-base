@@ -1,0 +1,119 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+
+import com.igexin.sdk.PushManager;
+import com.tdh.common.utils.CommonUtil;
+
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.RequestLogin;
+import tdh.ifm.android.imatch.app.bean.User;
+import tdh.ifm.android.imatch.app.presenter.LoginPresenterImpl;
+import tdh.ifm.android.imatch.app.utils.Constants;
+import tdh.ifm.android.imatch.app.utils.SharedPreferencesUtil;
+import tdh.ifm.android.imatch.app.utils.Util;
+import tdh.ifm.android.imatch.app.view.LoginView;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/23 15:15
+ */
+public class SplashActivity extends BaseActivity implements LoginView {
+
+    private LoginPresenterImpl loginPresenter;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void initData() {
+        loginPresenter = new LoginPresenterImpl(context,this);
+
+        String phone = SharedPreferencesUtil.getValue(Constants.PHONE,"");
+        String pwd = SharedPreferencesUtil.getValue(Constants.PASSWORD,"");
+        if (phone.equals("") || pwd.equals("")) {
+            handler.sendEmptyMessageDelayed(2, 2000);
+        } else {
+            if (CommonUtil.IsHaveInternet(context)) {
+                RequestLogin requestLogin = new RequestLogin();
+                requestLogin.setUsername(phone);
+                requestLogin.setPassword(pwd);
+                requestLogin.setLoginType("1");
+                loginPresenter.login(requestLogin);
+            } else {
+                handler.sendEmptyMessageDelayed(2, 2000);
+            }
+        }
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideprogress() {
+
+    }
+
+    @Override
+    public void showFailure(String str, Throwable t) {
+        handler.sendEmptyMessageDelayed(2, 1000);
+    }
+
+    @Override
+    public void showResState(int code) {
+        handler.sendEmptyMessageDelayed(2, 1000);
+    }
+
+    @Override
+    public void onLoginSuccess(BaseResponse<User> baseResponse) {
+        if (baseResponse.isSuccess()) {
+            User user = baseResponse.getBody();
+            if (user == null) {
+                handler.sendEmptyMessageDelayed(2, 1000);
+                return;
+            }
+            SharedPreferencesUtil.setValue(Constants.USERID,user.getProfileId());
+            if (!TextUtils.isEmpty(user.getUsrTypeCd())) {
+                SharedPreferencesUtil.setValue(Constants.USERTYPE,user.getUsrTypeCd());
+            }else {
+                SharedPreferencesUtil.setValue(Constants.USERTYPE,Constants.USERTYPE_C);
+            }
+
+//            PushManager.getInstance().bindAlias(context, user.getProfileId()+"");
+
+            handler.sendEmptyMessageDelayed(1,1000);
+        }else {
+            handler.sendEmptyMessageDelayed(2, 1000);
+        }
+    }
+
+    @Override
+    public void onSendLoginCodeSuccess(BaseResponse baseResponse) {
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:        //跳到首页
+                    Util.intentToActivity(context,MainActivity.class);
+                    finish();
+                    break;
+                case 2:        //跳到登录页
+                    Util.intentToActivity(context,LoginActvity.class);
+                    finish();
+                    break;
+            }
+        }
+    };
+
+}

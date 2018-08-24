@@ -1,0 +1,19 @@
+package tdh.ifm.android.imatch.app.bean;
+
+import java.io.Serializable;
+
+/**
+ * Created by tdh on 2017/5/5.
+ */
+
+public class FriendListRequest implements Serializable {
+  private String searchKey;
+
+  public String getSearchKey() {
+    return searchKey;
+  }
+
+  public void setSearchKey(String searchKey) {
+    this.searchKey = searchKey;
+  }
+}

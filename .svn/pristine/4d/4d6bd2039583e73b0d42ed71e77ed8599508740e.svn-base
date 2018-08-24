@@ -1,0 +1,19 @@
+package tdh.ifm.android.imatch.app.view;
+
+import java.util.List;
+
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.base.BaseView;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+
+/**
+ * Created by tdh on 2017/5/8.
+ */
+
+public interface AddFriendView extends BaseView {
+    void onAddFriendSearchSuccess(BaseResponse<List<FriendInfo>> baseResponse);
+    void onAddFriendSuccess(BaseResponse baseResponse);
+
+
+}

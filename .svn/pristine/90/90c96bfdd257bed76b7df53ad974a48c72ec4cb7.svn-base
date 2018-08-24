@@ -1,0 +1,22 @@
+package tdh.ifm.android.imatch.app.model;
+
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.base.BaseListener;
+import tdh.ifm.android.imatch.app.bean.TestUser;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/27 10:51
+ */
+public interface TestModel {
+
+    /**
+     * 获取是否配置费率
+     */
+    void test(TestUser user);
+
+    interface OnTestListener extends BaseListener {
+        void onTestSuccess(BaseResponse baseResponse);
+    }
+
+}

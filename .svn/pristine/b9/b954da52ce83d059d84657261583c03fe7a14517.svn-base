@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!-- 通用背景颜色 -->
+    <color name="background">#f8f8f8</color>
+
+    <!-- 通用标题栏颜色 -->
+    <color name="title_background">#406FFF</color>
+
+    <!-- 分割线颜色 -->
+    <color name="dividers">#e6e6e6</color>
+
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <!-- 红色 -->
+    <color name="red">#f62232</color>
+
+    <!-- 常用文字颜色 -->
+    <color name="text_normal">#333333</color>
+    <color name="text_prompt">#666666</color>
+
+    <color name="text_prompt_right">#CCCCCC</color>
+
+    <!-- 切换标签文字颜色选中 -->
+    <color name="tab_text_press">#406FFF</color>
+    <!-- 切换标签文字颜色未选中 -->
+    <color name="tab_text">#1B1C1A</color>
+</resources>

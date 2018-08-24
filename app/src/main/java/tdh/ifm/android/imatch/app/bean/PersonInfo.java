@@ -1,0 +1,53 @@
+package tdh.ifm.android.imatch.app.bean;
+
+/**
+ * Created by tdh on 2017/5/10.
+ */
+
+public class PersonInfo {
+    private String memberName;
+    private String vehicleLoad;
+    private String vehicleLength;
+    private String vehicleModel;
+    private String vehiclePlateNo;
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getVehicleLoad() {
+        return vehicleLoad;
+    }
+
+    public void setVehicleLoad(String vehicleLoad) {
+        this.vehicleLoad = vehicleLoad;
+    }
+
+    public String getVehicleLength() {
+        return vehicleLength;
+    }
+
+    public void setVehicleLength(String vehicleLength) {
+        this.vehicleLength = vehicleLength;
+    }
+
+    public String getVehicleModel() {
+        return vehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
+    }
+
+    public String getVehiclePlateNo() {
+        return vehiclePlateNo;
+    }
+
+    public void setVehiclePlateNo(String vehiclePlateNo) {
+        this.vehiclePlateNo = vehiclePlateNo;
+    }
+}

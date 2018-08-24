@@ -1,0 +1,95 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.graphics.Bitmap;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.BindBitmap;
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+
+/**
+ * Created by tdh on 2017/5/4.
+ */
+
+public class SetPasswordActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.et_new_password)
+    EditText etNewPassword;
+    @BindView(R.id.img_pwd)
+    ImageView imgPwd;
+    @BindView(R.id.et_mobile)
+    EditText etMobile;
+    @BindView(R.id.et_verification_code)
+    EditText etVerificationCode;
+    @BindView(R.id.tv_identify_code)
+    TextView tvIdentifyCode;
+
+
+    @BindString(R.string.txt_set_newpassword)
+    String title;
+
+    @BindBitmap(R.mipmap.login_pwd_visible)
+    Bitmap pwdVisible;
+    @BindBitmap(R.mipmap.login_pwd_invisible)
+    Bitmap pwdInVisible;
+    /** 密码是否可见  默认不可见 **/
+    private boolean isPwdVisible;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_set_password;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @OnClick(R.id.img_pwd)
+    public void onIvPwdClicked() {
+        if (isPwdVisible) {
+            /** 密码不可见 **/
+            isPwdVisible = false;
+            imgPwd.setImageBitmap(pwdInVisible);
+            etNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }else {
+            /** 密码可见 **/
+            isPwdVisible = true;
+            imgPwd.setImageBitmap(pwdVisible);
+            etNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+    }
+
+    @OnClick(R.id.tv_identify_code)
+    void onCodeClick(){
+
+    }
+
+    @OnClick(R.id.btn_confirm)
+    void onBtnComfirmClick(){
+
+    }
+}

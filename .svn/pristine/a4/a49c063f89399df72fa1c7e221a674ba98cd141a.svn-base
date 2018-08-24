@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">UTruck</string>
+
+    <!-- 登录-->
+    <string name="title_login">登 录</string>
+    <string name="txt_login_1">账号密码登录</string>
+    <string name="txt_login_2">手机快捷登录</string>
+    <string name="prompt_login_mobile">请输入您的手机号</string>
+    <string name="prompt_login_password">请输入您的登录密码</string>
+    <string name="prompt_login_code">请输入收到的手机验证码</string>
+    <string name="txt_login_forget">忘记密码？</string>
+    <string name="txt_login_3">还没有账号？</string>
+    <string name="txt_login_register">点击注册</string>
+
+    <!-- 注册-->
+    <string name="txt_star">*</string>
+    <string name="txt_mobile">手机号</string>
+    <string name="prompt_mobile">请输入登录手机号</string>
+    <string name="txt_password">密码</string>
+    <string name="prompt_password">请输入登录密码</string>
+    <string name="txt_name">姓名</string>
+    <string name="prompt_name">请输入姓名</string>
+    <string name="txt_plate_number">车牌号</string>
+    <string name="prompt_plate_number">请输入车牌号</string>
+    <string name="txt_car_length">车长(米)</string>
+    <string name="prompt_car_length">请选择车长</string>
+    <string name="txt_load">载重(吨)</string>
+    <string name="prompt_load">请输入载重</string>
+    <string name="txt_car_type">车型</string>
+    <string name="prompt_car_type">请选择车型</string>
+    <string name="txt_verification_code">验证码</string>
+    <string name="get_identify_code">获取验证码</string>
+    <string name="btn_register">注册</string>
+    <string name="txt_member">会员等级</string>
+    <string name="txt_member_level">你的会员等级</string>
+    <string name="txt_primary_member">初级会员</string>
+    <string name="txt_advanced_member">高级会员</string>
+    <string name="btn_get_advanced_member">成为高级会员</string>
+    <string name="txt_prompt_tel">请输入手机号查询</string>
+
+    <!-- 会员中心-->
+    <string name="txt_attention_line">关注路线</string>
+
+    <string name="txt_member_info">您的会员等级：</string>
+    <string name="txt_submit">提交审核</string>
+    <string name="title_member_level">会员等级</string>
+
+    <string name="txt_my_message">我的消息</string>
+
+    <string name="txt_friend">我的好友</string>
+
+
+
+
+</resources>

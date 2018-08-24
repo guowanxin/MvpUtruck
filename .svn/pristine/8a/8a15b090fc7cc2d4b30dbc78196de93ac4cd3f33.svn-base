@@ -1,0 +1,37 @@
+package tdh.ifm.android.imatch.app.model;
+
+import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.TestUser;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/24 19:08
+ */
+public interface Api {
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST("testService/testString")
+    Call<BaseResponse<TestUser>> test(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST("ut/friend/list")
+    Call<BaseResponse<BasePageList<List<FriendInfo>>>> friendList(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST("ut/friend/create")
+    Call<BaseResponse> addFriend(@Body RequestBody requestBody);
+
+    @Headers({"Content-Type:application/json","Accept:application/json"})
+    @POST("ut/friend/delete")
+    Call<BaseResponse> deleteFriend(@Body RequestBody requestBody);
+
+}

@@ -1,0 +1,66 @@
+package tdh.ifm.android.imatch.app.utils;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/21 19:11
+ */
+public class NetContant {
+
+    public static final String TAG = "utruck";
+
+   // public static final String HOST_URL = "http://192.168.72.163:9990/";
+
+    public static final String HOST_URL = "http://192.168.65.78:8080/";
+
+    public static final String UPDATE_URL = "http://admin.56pingtai.net/dev/check-app-update.do";
+
+    public static final String UT = "ut/";
+    public static final String INDEX = "index/";
+    public static final String MEMBER = "member/center/";
+
+    /**  我的好友  **/
+    public static final String FRIEND_LIST = UT + "friend/list";
+    /**  添加好友  **/
+    public static final String ADD_FRIEND = UT + "friend/create";
+    /**  删除好友  **/
+    public static final String DELETE_FRIEND = UT + "friend/delete";
+
+    /**
+     * 会员相关
+     */
+    /**  登录  **/
+    public static final String LOGININ = INDEX + "login";
+    /**  司机注册  **/
+    public static final String REGISTER_DRIVER=INDEX+"registerDriver";
+    /**  货主注册  **/
+    public static final String REGISTER_SHIPPER=INDEX+"registerShipper";
+    /**  经纪人注册  **/
+    public static final String REGISTER_AGENT=INDEX+"registerAgent";
+    /**  物流企业注册  **/
+    public static final String REGISTER_COMPANY=INDEX+"registerLogisticsCompany";
+    /**  退出登录  **/
+    public static final String LOGINOUT = INDEX + "logout";
+    /**  发送登录验证码  **/
+    public static final String SENDLOGINCODE = INDEX + "sendMobileLoginCode";
+    /**  查询当前登录基本信息  **/
+    public static final String QUERYMEMBER = MEMBER + "queryMember";
+    /**  发送注册验证码 **/
+    public static final String SEND_REGISTER_CODE=INDEX+"sendRegisterCode";
+    /**  重置登录密码  **/
+    public static final String RESETPASSWORD = INDEX+"resetLoginPassword";
+    /**  发送重置密码验证码  **/
+    public static final String SENDPASSWOIDCODE=INDEX+"sendLoginPasswordCode";
+    /**  查询当前会员认证信息  **/
+    public static final String QUERY_MEMBERAUTH_INFO = MEMBER+"queryMemberAuthInfo";
+    /**  补全认证信息  **/
+    public static final String COMPLETION_MEMBERAUTH_INFO = MEMBER+"completionMemberData";
+    /**  查询当前个人登录信息  **/
+    public static final String QUERY_PERSON_MESSAGE=MEMBER+"queryPersonal";
+    /**  查询当前企业信息 **/
+    public static final String QUERY_COMPANY_MESSAGE=MEMBER+"queryCompany";
+    /**  修改个人信息审核  **/
+    public static final String UPDATE_PERSON_MESSAGE=MEMBER+"updatePersonal";
+    /** 修改企业信息审核  **/
+    public static final String UPDATE_COMPANY_MESSAGE=MEMBER+"updateCompany";
+
+}

@@ -1,0 +1,39 @@
+package tdh.ifm.android.imatch.app.bean;
+
+import java.io.Serializable;
+
+/**
+ * Created by tdh on 2017/5/5.
+ */
+
+public class DriverInfo implements Serializable {
+  private float weight;
+
+  private float length;
+
+  private String plateNo;
+
+  public float getWeight() {
+    return weight;
+  }
+
+  public void setWeight(float weight) {
+    this.weight = weight;
+  }
+
+  public float getLength() {
+    return length;
+  }
+
+  public void setLength(float length) {
+    this.length = length;
+  }
+
+  public String getPlateNo() {
+    return plateNo;
+  }
+
+  public void setPlateNo(String plateNo) {
+    this.plateNo = plateNo;
+  }
+}

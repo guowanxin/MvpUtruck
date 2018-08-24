@@ -1,0 +1,58 @@
+package tdh.ifm.android.imatch.app.ui.activity.user;
+
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.ui.adapter.FriendListAdapter;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+
+/**
+ * 我的好友
+ * Author：xyf
+ * Created by tdh on 2017/5/4.
+ */
+
+public class FriendListActivity extends BaseActivity {
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+
+    @BindString(R.string.txt_friend)
+    String title;
+
+    private FriendListAdapter adapter;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_friend_list;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+
+    @Override
+    public void initData() {
+
+        recycler.setLayoutManager(new LinearLayoutManager(context));
+
+        adapter = new FriendListAdapter(context);
+        recycler.setAdapter(adapter);
+    }
+}

@@ -1,0 +1,208 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.CommonUtil;
+
+import butterknife.BindBitmap;
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.OnClick;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.RequestPhone;
+import tdh.ifm.android.imatch.app.bean.RequestResetPwd;
+import tdh.ifm.android.imatch.app.model.UserModel;
+import tdh.ifm.android.imatch.app.model.UserModelImpl;
+import tdh.ifm.android.imatch.app.presenter.ResetPwdPresenterImpl;
+import tdh.ifm.android.imatch.app.ui.view.IdentifyCode;
+import tdh.ifm.android.imatch.app.ui.view.MyTitleView;
+import tdh.ifm.android.imatch.app.utils.Util;
+import tdh.ifm.android.imatch.app.view.ResetPwdView;
+
+/**
+ * Created by tdh on 2017/5/4.
+ */
+
+public class SetPasswordActivity extends BaseActivity implements ResetPwdView{
+
+    @BindView(R.id.titleview)
+    MyTitleView titleview;
+    @BindView(R.id.et_new_password)
+    EditText etNewPassword;
+    @BindView(R.id.img_pwd)
+    ImageView imgPwd;
+    @BindView(R.id.et_mobile)
+    EditText etMobile;
+    @BindView(R.id.et_verification_code)
+    EditText etVerificationCode;
+    @BindView(R.id.tv_identify_code)
+    TextView tvIdentifyCode;
+
+
+    @BindString(R.string.txt_set_newpassword)
+    String title;
+
+    @BindBitmap(R.mipmap.login_pwd_visible)
+    Bitmap pwdVisible;
+    @BindBitmap(R.mipmap.login_pwd_invisible)
+    Bitmap pwdInVisible;
+    /** 密码是否可见  默认不可见 **/
+    private boolean isPwdVisible;
+
+    private String mMobile;
+    private IdentifyCode iCode;
+
+    private ResetPwdPresenterImpl resetPwdPresenter;
+    private RequestResetPwd requestResetPwd;
+
+    private UserModel userModel;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_set_password;
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        titleview.getTv_title().setText(title);
+        titleview.getBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        requestResetPwd=new RequestResetPwd();
+        resetPwdPresenter = new ResetPwdPresenterImpl(context, this);
+        iCode = new IdentifyCode(60000, 1000, tvIdentifyCode, (Activity) context);
+
+        userModel = new UserModelImpl(context);
+    }
+
+    private boolean isnull(){
+        if (TextUtils.isEmpty(getValue(etNewPassword))){
+            CommonUtil.getToast(context,getString(R.string.prompt_new_password));
+            return false;
+        }
+        if (TextUtils.isEmpty(getValue(etMobile))){
+            CommonUtil.getToast(context,getString(R.string.prompt_mobile));
+            return  false;
+        }
+        if (TextUtils.isEmpty(getValue(etVerificationCode))){
+            CommonUtil.getToast(context,getString(R.string.prompt_login_code));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isMobileValidate() {
+        if (TextUtils.isEmpty(mMobile)) {
+            CommonUtil.getToast(context, getString(R.string.prompt_mobile));
+            return false;
+        }
+        return true;
+    }
+
+    @OnClick(R.id.img_pwd)
+    public void onIvPwdClicked() {
+        if (isPwdVisible) {
+            /** 密码不可见 **/
+            isPwdVisible = false;
+            imgPwd.setImageBitmap(pwdInVisible);
+            etNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }else {
+            /** 密码可见 **/
+            isPwdVisible = true;
+            imgPwd.setImageBitmap(pwdVisible);
+            etNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+    }
+
+    @OnClick(R.id.tv_identify_code)
+    void onCodeClick(){
+        mMobile = getValue(etMobile);
+        if (isMobileValidate()) {
+            RequestPhone requestPhone = new RequestPhone();
+            requestPhone.setMobile(mMobile);
+            resetPwdPresenter.sendPasswordCode(requestPhone);
+            iCode.start();// 开始计时
+        }
+    }
+
+    @OnClick(R.id.btn_confirm)
+    void onBtnComfirmClick(){
+        if (!isnull()) {
+            return;
+        }
+        requestResetPwd.setNewPassword(getValue(etNewPassword));
+        requestResetPwd.setMobile(getValue(etMobile));
+        requestResetPwd.setCode(getValue(etVerificationCode));
+        resetPwdPresenter.resetPassword(requestResetPwd);
+    }
+
+    @Override
+    public void showProgress() {
+        dialogShow();
+    }
+
+    @Override
+    public void hideprogress() {
+        dialogHide();
+    }
+
+    @Override
+    public void showFailure(String str, Throwable t) {
+        APPLog.error(str, t);
+    }
+
+    @Override
+    public void showResState(int code) {
+        Util.setResCode(context,code);
+    }
+
+    @Override
+    public void onResetPwdSuccess(BaseResponse baseResponse) {
+        if (baseResponse.isSuccess()) {
+            userModel.loginOut(null);
+
+            Util.exitLogin(context);
+            CommonUtil.getToast(context,baseResponse.getMessage());
+        }else {
+            if (!TextUtils.isEmpty(baseResponse.getMessage())){
+                CommonUtil.getToast(context,baseResponse.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onSendPasswordCodeSuccess(BaseResponse baseResponse) {
+        if (baseResponse.isSuccess()) {
+            CommonUtil.getToast(context, baseResponse.getMessage());
+        } else {
+            CommonUtil.getToast(context, baseResponse.getMessage());
+            reStart();
+        }
+    }
+
+    private void reStart() {
+        if (null != iCode) {
+            iCode.cancel();
+            iCode.onFinish();
+        }
+    }
+}

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:orientation="vertical">
+
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </tdh.ifm.android.imatch.app.ui.view.MyTitleView>
+    <com.tdh.common.view.MySwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <tdh.ifm.android.imatch.app.ui.view.SwipeWebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </tdh.ifm.android.imatch.app.ui.view.SwipeWebView>
+    </com.tdh.common.view.MySwipeRefreshLayout>
+
+</LinearLayout>

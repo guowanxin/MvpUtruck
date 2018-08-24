@@ -1,0 +1,46 @@
+package tdh.ifm.android.imatch.app.model;
+
+import java.util.List;
+
+import tdh.ifm.android.imatch.app.base.BaseListener;
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.FriendListRequest;
+import tdh.ifm.android.imatch.app.bean.FriendRequest;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/5 14:53
+ */
+public interface UserModel {
+
+    /**
+     * 获取好友列表
+     */
+    void getFriendList(FriendListRequest request,UserModelImpl.OnFriendListener listener);
+
+    /**
+     * 删除好友
+     */
+    void deleteFriend(FriendRequest request,UserModelImpl.OnFriendListener listener);
+    /**
+     * 添加好友
+     */
+    void addFriend(FriendRequest request,UserModelImpl.OnAddFriendList listener);
+
+     interface OnFriendListener extends BaseListener {
+        void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse);
+        void onDeleteFriendSuccess(BaseResponse baseResponse);
+
+    }
+
+    interface OnAddFriendList extends BaseListener {
+        void onFriendListSuccess(BaseResponse<BasePageList<List<FriendInfo>>> baseResponse);
+
+        void onAddFriendSuccess(BaseResponse baseResponse);
+    }
+
+
+
+}

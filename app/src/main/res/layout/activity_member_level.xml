@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <tdh.ifm.android.imatch.app.ui.view.MyTitleView
+        android:id="@+id/titleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:background="@color/title_background"
+        android:orientation="horizontal"
+        android:padding="15px">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:padding="15px"
+                android:text="@string/txt_member_info"
+                android:textColor="@color/white"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_member_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15px"
+                android:text="@string/txt_primary_member"
+                android:textColor="@color/yellow"
+                android:textSize="60px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/img_member_level" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30px">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px">
+
+                <LinearLayout
+                    android:layout_width="6px"
+                    android:layout_height="30px"
+                    android:background="@color/blue"
+                    android:paddingRight="13px"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12px"
+                    android:text="@string/txt_primary_member"
+                    android:textColor="@color/text_prompt"
+                    android:textSize="30px" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="19px">
+
+
+                <TextView
+                    android:id="@+id/tv_primary_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="是非成败转头空，青山依旧在，惯看秋月春风。一壶浊酒喜相逢，古今多少事，滚滚长江东逝水，浪花淘尽英雄。 几度夕阳红。白发渔樵江渚上，都付笑谈中。 滚滚长江东逝水，浪花淘尽英雄。是非成败转头空，青山依旧在，几度夕阳红。白发渔樵江渚上"
+                    android:textColor="@color/text_list"
+                    android:textSize="28px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px">
+
+                <LinearLayout
+                    android:layout_width="6px"
+                    android:layout_height="30px"
+                    android:background="@color/blue"
+                    android:paddingRight="13px"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12px"
+                    android:text="@string/txt_advanced_member"
+                    android:textColor="@color/text_prompt"
+                    android:textSize="30px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="19px">
+
+
+                <TextView
+                    android:id="@+id/tv_advanced_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="是非成败转头空，青山依旧在，惯看秋月春风。一壶浊酒喜相逢，古今多少事，滚滚长江东逝水，浪花淘尽英雄。 几度夕阳红。白发渔樵江渚上，都付笑谈中。 滚滚长江东逝水，浪花淘尽英雄。是非成败转头空，青山依旧在，几度夕阳红。白发渔樵江渚上"
+                    android:textColor="@color/text_list"
+                    android:textSize="28px" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_get_advanced_member"
+                android:layout_width="match_parent"
+                android:layout_height="96px"
+                android:layout_marginLeft="100px"
+                android:layout_marginRight="100px"
+                android:layout_marginTop="80px"
+                android:background="@drawable/btn_bg"
+                android:gravity="center"
+                android:text="@string/btn_get_advanced_member"
+                android:textColor="@color/white"
+                android:textSize="36px" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

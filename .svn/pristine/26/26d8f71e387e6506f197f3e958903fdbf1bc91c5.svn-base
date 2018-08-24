@@ -1,0 +1,22 @@
+package tdh.ifm.android.imatch.app.presenter;
+
+import tdh.ifm.android.imatch.app.base.BasePageList;
+import tdh.ifm.android.imatch.app.base.BaseResponse;
+import tdh.ifm.android.imatch.app.bean.FriendInfo;
+import tdh.ifm.android.imatch.app.bean.FriendListRequest;
+import tdh.ifm.android.imatch.app.bean.FriendRequest;
+
+/**
+ * Created by TDH on 2016/12/15.
+ */
+
+public interface FriendPresenter {
+    void friendList(FriendListRequest request);
+
+    void friendDetail(FriendRequest request);
+
+    void deleteFriend(FriendRequest request);
+
+    void addFriend(FriendRequest request);
+
+}

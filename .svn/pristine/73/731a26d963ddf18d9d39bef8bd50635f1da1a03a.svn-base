@@ -1,0 +1,19 @@
+package tdh.ifm.android.imatch.app.ui.activity;
+
+import tdh.ifm.android.imatch.app.base.BaseActivity;
+
+/**
+ * Created by tdh on 2017/5/4.
+ */
+
+public class SettingsActivity extends BaseActivity {
+    @Override
+    public int getContentViewId() {
+        return 0;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+}

@@ -1,0 +1,149 @@
+package tdh.ifm.android.imatch.app.ui.fragment;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import com.tdh.common.utils.APPLog;
+import com.tdh.common.utils.CommonUtil;
+import com.tdh.common.view.MySwipeRefreshLayout;
+
+import butterknife.BindView;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.base.BaseFragment;
+import tdh.ifm.android.imatch.app.ui.view.SwipeWebView;
+import tdh.ifm.android.imatch.app.utils.NetContant;
+import tdh.ifm.android.imatch.app.utils.Util;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/12 18:21
+ */
+public class WebViewFragment extends BaseFragment {
+
+    @BindView(R.id.webView)
+    SwipeWebView webView;
+    @BindView(R.id.swipeLayout)
+    MySwipeRefreshLayout swipeLayout;
+
+    private String url;
+
+    private MyWebClient webViewClient;
+
+    SharedPreferences sharedPreferences;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_webview_swipelayout;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    private void setWeb(String url) {
+
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+
+        JavaScriptInterface myJavaScriptInterface = new JavaScriptInterface(context);
+        webView.addJavascriptInterface(myJavaScriptInterface, "Android");
+        webViewClient = new MyWebClient();
+        webView.setWebViewClient(webViewClient);
+
+        Util.synCookies(context, url, sharedPreferences.getString("cookie", ""));
+
+        webView.loadUrl(url);
+
+    }
+
+    public class JavaScriptInterface {
+        Context mContext;
+
+        public JavaScriptInterface(Context c) {
+            mContext = c;
+        }
+
+        //设置是否能够下拉
+        @JavascriptInterface
+        public void setReloadPage(boolean isReloadPage) {
+            APPLog.error("------isReloadPage----"+isReloadPage);
+            webView.setReloadPage(isReloadPage);
+            Message message = new Message();
+            message.what = 1;
+            message.obj = isReloadPage;
+            handler.sendMessage(message);
+        }
+
+    }
+
+    class MyWebClient extends WebViewClient {
+
+        @Override
+        public void onFormResubmission(WebView view, Message dontResend, Message resend) {
+            // TODO Auto-generated method stub
+            resend.sendToTarget();
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // TODO Auto-generated method stub
+            Util.synCookies(context, url, sharedPreferences.getString("cookie", ""));
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // TODO Auto-generated method stub
+            super.onPageFinished(view, url);
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceivedError(WebView view, int errorCode,
+                                    String description, String failingUrl) {
+            // TODO Auto-generated method stub
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            APPLog.error(NetContant.TAG,"==errorCode=="+errorCode+"---description--"+description+"+++failingUrl++"+failingUrl);
+            if (errorCode != 200) {
+                if (TextUtils.isEmpty(description)) {
+                    CommonUtil.getToast(context,"服务器连接失败，请重试");
+                }else {
+                    CommonUtil.getToast(context,description);
+                }
+                ((Activity) context).finish();
+            }
+
+        }
+
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    boolean isReloadPage = (boolean) msg.obj;
+                    if (isReloadPage) {
+                        swipeLayout.setEnabled(true);
+                    }else {
+                        swipeLayout.setEnabled(false);
+                    }
+                    break;
+            }
+        }
+    };
+
+}

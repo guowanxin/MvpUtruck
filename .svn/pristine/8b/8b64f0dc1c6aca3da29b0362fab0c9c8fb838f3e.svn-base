@@ -1,0 +1,112 @@
+package tdh.ifm.android.imatch.app.ui.adapter;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.zhy.autolayout.utils.AutoUtils;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import tdh.ifm.android.imatch.app.R;
+import tdh.ifm.android.imatch.app.bean.AttentionLine;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/3 19:46
+ */
+public class AttentionLineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private Context context;
+    private List<AttentionLine> attentionLineList;
+
+    private OnDeleteLineListener lineListener;
+
+    public void setLineListener(OnDeleteLineListener lineListener) {
+        this.lineListener = lineListener;
+    }
+
+    public AttentionLineAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<AttentionLine> attentionLineList) {
+        this.attentionLineList = attentionLineList;
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // 创建一个View，简单起见直接使用系统提供的布局，就是一个TextView
+        View view = LayoutInflater.from(context).inflate(
+                R.layout.item_attention_line, parent, false);
+        // 创建一个ViewHolder
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final AttentionLine attentionLine = attentionLineList.get(position);
+
+        ((MyViewHolder)holder).tvAddress.setText(attentionLine.getOriginalCt()+"-"+attentionLine.getDestinationCt());
+//        if (position == 0) {
+//            ((MyViewHolder) holder).ivLineCheck.setImageResource(R.mipmap.icon_line_checked);
+//        }else {
+//            ((MyViewHolder) holder).ivLineCheck.setImageResource(R.mipmap.icon_line_unchecked);
+//        }
+
+        ((MyViewHolder) holder).llLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        ((MyViewHolder) holder).llDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lineListener.onDeleteLine(attentionLine.getRouteId());
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        if (attentionLineList == null) {
+            return 0;
+        }
+        return attentionLineList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tv_address)
+        TextView tvAddress;
+        @BindView(R.id.ll_line)
+        LinearLayout llLine;
+        @BindView(R.id.iv_line_check)
+        ImageView ivLineCheck;
+        @BindView(R.id.ll_delete)
+        LinearLayout llDelete;
+
+        public MyViewHolder(View view) {
+            super(view);
+            // 给父控件绑定监听器
+            AutoUtils.autoSize(view);
+            ButterKnife.bind(this, view);
+
+        }
+    }
+
+    public interface OnDeleteLineListener {
+        void onDeleteLine(String routeId);
+    }
+
+}

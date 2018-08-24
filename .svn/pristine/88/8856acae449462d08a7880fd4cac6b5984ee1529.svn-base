@@ -1,0 +1,16 @@
+package tdh.ifm.android.imatch.app.model;
+
+import android.content.Context;
+
+import tdh.ifm.android.imatch.app.base.BaseNet;
+
+/**
+ * Author：gwx
+ * Create at：2017/5/5 14:54
+ */
+public class UserModelImpl extends BaseNet implements UserModel {
+
+    public UserModelImpl(Context context) {
+        super(context);
+    }
+}

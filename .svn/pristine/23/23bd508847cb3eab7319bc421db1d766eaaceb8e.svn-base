@@ -1,0 +1,15 @@
+package tdh.ifm.android.imatch.app.utils;
+
+/**
+ * Author：gwx
+ * Create at：2017/4/24 19:15
+ */
+public class Constants {
+
+    /** 版本更新 **/
+    public static final String UPDATE_WIFI = "update.wifi";
+    public static final String UPDATE_SHOW = "update.show";
+    public static final int TYPE_NETWORK_CELL = 1;
+    public static final int TYPE_NETWORK_WIFI = 2;
+
+}
